@@ -1,0 +1,8 @@
+E:\Projects\DSandPS\DSandPS\bin\Debug\DSandPS.exe.config
+E:\Projects\DSandPS\DSandPS\bin\Debug\DSandPS.exe
+E:\Projects\DSandPS\DSandPS\bin\Debug\DSandPS.pdb
+E:\Projects\DSandPS\DSandPS\obj\Debug\DSandPS.csproj.AssemblyReference.cache
+E:\Projects\DSandPS\DSandPS\obj\Debug\DSandPS.csproj.SuggestedBindingRedirects.cache
+E:\Projects\DSandPS\DSandPS\obj\Debug\DSandPS.csproj.CoreCompileInputs.cache
+E:\Projects\DSandPS\DSandPS\obj\Debug\DSandPS.exe
+E:\Projects\DSandPS\DSandPS\obj\Debug\DSandPS.pdb
