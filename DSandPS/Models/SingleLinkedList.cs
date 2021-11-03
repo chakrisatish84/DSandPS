@@ -630,17 +630,17 @@ namespace DSandPS.Models
             while (p.next != null)
             {
                 isDuplicateFound = false;
-                q = p.next;               
+                q = p.next;
                 while (q != null)
                 {
                     //check q and p nodes are same.
-                    if(p.data == q.data)
+                    if (p.data == q.data)
                     {
                         isDuplicateFound = true;
                         x = p.next;
 
                         // if postion is 1 we need to change the head too.
-                        if(position == 1)
+                        if (position == 1)
                         {
                             p = x; // Move P to next element (ignore the first element as that is duplicate to other).
                             head = p; // Make second element as head.
@@ -670,13 +670,13 @@ namespace DSandPS.Models
 
         internal void RemoveDuplicatesFromSortedList()
         {
-           if(head == null)
+            if (head == null)
             {
                 Console.WriteLine("List is empty");
                 return;
             }
 
-           if(head != null && head.next == null)
+            if (head != null && head.next == null)
             {
                 Console.WriteLine("List is is having only one element and that is sorted");
                 return;
@@ -684,10 +684,10 @@ namespace DSandPS.Models
 
             SingleListNode p = head;
             SingleListNode q = null;
-           
-           while(p!= null & p.next != null)
+
+            while (p != null & p.next != null)
             {
-                if(p.data != p.next.data)
+                if (p.data != p.next.data)
                 {
                     p = p.next;
                 }
@@ -696,13 +696,55 @@ namespace DSandPS.Models
                     q = p.next.next;
                     p.next = q;
 
-                    if(p.next == null)
+                    if (p.next == null)
                     {
                         break;
                     }
                 }
             }
+        }
 
+        internal void SwapNodesPairwise()
+        {
+            if (head == null || head.next == null)
+            {
+                Console.WriteLine("List is empty (or) have only one element");
+                return;
+            }
+
+            SingleListNode p = head;
+            SingleListNode q = null;
+            SingleListNode ptr = null;
+            SingleListNode new_header = null;
+
+            new_header = p.next;
+
+            while (p.next != null)
+            {
+                q = p.next;
+                ptr = q.next;
+                q.next = p;
+
+                if (ptr == null || ptr.next == null)
+                {
+                    //If list is odd number last node exists and need keep as is
+                    if (ptr != null)
+                    {
+                        p.next = ptr;
+                        p.next.next = null;
+                        break;
+                    }
+                    else
+                    {
+                        p.next = null;
+                        break;
+                    }
+                }
+                p.next = ptr.next;
+                p = ptr;
+            }
+
+            head = new_header;
         }
     }
 }
