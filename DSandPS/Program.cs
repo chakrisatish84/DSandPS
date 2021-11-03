@@ -15,7 +15,7 @@ namespace DSandPS
             //int[] arr = { 5, 4, 8, 7, 1, 2, 3, 4, 5, 6, };
             //int[] arr = { 5, 4, 5, 8, 1, 7, 1, 2, 5 };
 
-            int[] arr = { 5, 4, 8, 4, 5 };
+            int[] arr = { 1,2,2,3,4,5,5,5,6,6,7,8,9,9 };
 
             //Single Linked List
             SingleLinkedList list = new SingleLinkedList();
@@ -91,9 +91,14 @@ namespace DSandPS
             // Check linked list is pallindrome
             //list.isListisPallindrome();
 
-            // Remove duplicated from unsortedList
-            list.RemoveDuplicatesFromUnsortedList();
-            Console.WriteLine("Elements after remvoing duplicates");
+            // Remove duplicates from unsortedList
+            //list.RemoveDuplicatesFromUnsortedList();
+            //Console.WriteLine("Elements after remvoing duplicates from unsorted list");
+            //list.PrintListItemsRecursively();
+
+            // Remove duplicates from sortedList
+            list.RemoveDuplicatesFromSortedList();
+            Console.WriteLine("Elements after remvoing duplicates from sorted list");
             list.PrintListItemsRecursively();
         }
     }

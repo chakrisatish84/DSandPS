@@ -165,6 +165,7 @@ namespace DSandPS.Models
             }
             temp.next = newElement;
         }
+
         internal void InserElementAtMiddle()
         {
             SingleListNode newElement = new SingleListNode();
@@ -664,6 +665,44 @@ namespace DSandPS.Models
                 }
             }
             #endregion
+        }
+
+
+        internal void RemoveDuplicatesFromSortedList()
+        {
+           if(head == null)
+            {
+                Console.WriteLine("List is empty");
+                return;
+            }
+
+           if(head != null && head.next == null)
+            {
+                Console.WriteLine("List is is having only one element and that is sorted");
+                return;
+            }
+
+            SingleListNode p = head;
+            SingleListNode q = null;
+           
+           while(p!= null & p.next != null)
+            {
+                if(p.data != p.next.data)
+                {
+                    p = p.next;
+                }
+                else
+                {
+                    q = p.next.next;
+                    p.next = q;
+
+                    if(p.next == null)
+                    {
+                        break;
+                    }
+                }
+            }
+
         }
     }
 }
