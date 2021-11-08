@@ -165,6 +165,7 @@ namespace DSandPS.Models
             }
             temp.next = newElement;
         }
+
         internal void InserElementAtMiddle()
         {
             SingleListNode newElement = new SingleListNode();
@@ -629,17 +630,17 @@ namespace DSandPS.Models
             while (p.next != null)
             {
                 isDuplicateFound = false;
-                q = p.next;               
+                q = p.next;
                 while (q != null)
                 {
                     //check q and p nodes are same.
-                    if(p.data == q.data)
+                    if (p.data == q.data)
                     {
                         isDuplicateFound = true;
                         x = p.next;
 
                         // if postion is 1 we need to change the head too.
-                        if(position == 1)
+                        if (position == 1)
                         {
                             p = x; // Move P to next element (ignore the first element as that is duplicate to other).
                             head = p; // Make second element as head.
@@ -664,6 +665,138 @@ namespace DSandPS.Models
                 }
             }
             #endregion
+        }
+
+        internal void AddTwoLinkedList()
+        {
+            // 1. Created two linked list.
+            // 2. check length of two lists
+            // 3. Length is not same, add 0's at smallest list.
+            // 4. Reverset Linked list as additon will happen from right to left.
+            // 5. Declare few variables like Sum, Divideby10Value, Reminder, carry, newnodeValue
+            // 6. Loop through all the elements.
+
+            SingleListNode firstList = this.create(new int[] { 6, 4, 3, 2, 1 });
+            SingleListNode secondList = this.create(new int[] { 2, 7, 6, 8 });
+
+            int firstListLength, secondListLength = 0;
+            //Check length
+            this.GetLinkedListLength(firstList, secondList, out firstListLength, out secondListLength);
+
+            // Check lenghts are same
+            int diff = 0;
+
+            if (firstListLength != secondListLength)
+            {
+                if (firstListLength < secondListLength)
+                {
+                    diff = secondListLength - firstListLength;
+                    firstList = this.AddzerostoListToMakeSameLength(diff, firstList);
+                }
+                else
+                {
+                    diff = firstListLength - secondListLength;
+                    secondList = this.AddzerostoListToMakeSameLength(diff, secondList);
+                }
+            }
+
+            //reverse linked lists
+
+            firstList = this.reverseListRecursively(firstList);
+            secondList = this.reverseListRecursively(secondList);
+            SingleListNode sumList = null;
+            SingleListNode ptr = null;
+
+            int sum, dividebyzeroValue, reminder, newnodeValue = 0;
+            int carry = 0;
+
+            while (firstList != null)
+            {
+                sum = firstList.data + secondList.data + carry;
+                dividebyzeroValue = sum / 10;
+                reminder = sum % 10;
+                carry = dividebyzeroValue;
+
+                if(dividebyzeroValue != 0)
+                {
+                    newnodeValue = reminder;
+                }
+                else
+                {
+                    newnodeValue = sum;
+                }
+
+                SingleListNode temp = new SingleListNode();
+                temp.read(newnodeValue);
+
+                if (sumList == null)
+                {
+                    ptr = temp;
+                    sumList = temp;
+                }
+
+                else
+                {
+                    ptr.next = temp;
+                    ptr = ptr.next;
+                }
+
+                firstList = firstList.next;
+                secondList = secondList.next;
+            }
+            sumList = reverseListRecursively(sumList);
+            head = sumList;
+        }
+
+        private SingleListNode AddzerostoListToMakeSameLength(int diff, SingleListNode list)
+        {
+
+
+            while (diff != 0)
+            {
+                SingleListNode newNode = new SingleListNode();
+                newNode.read(0);
+
+                newNode.next = list;
+                list = newNode;
+
+                diff--;
+            }
+
+            return list;
+        }
+
+        private void GetLinkedListLength(SingleListNode firstList, SingleListNode secondList, out int firstListLength, out int secondListLength)
+        {
+            firstListLength = 0; secondListLength = 0;
+
+            if (firstList == null)
+            {
+                firstListLength = 0;
+            }
+            else
+            {
+                while (firstList != null)
+                {
+                    firstListLength++;
+                    firstList = firstList.next;
+                }
+            }
+
+            if (secondList == null)
+            {
+                secondListLength = 0;
+            }
+            else
+            {
+                while (secondList != null)
+                {
+                    secondListLength++;
+                    secondList = secondList.next;
+                }
+            }
+
+
         }
     }
 }

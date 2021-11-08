@@ -92,8 +92,13 @@ namespace DSandPS
             //list.isListisPallindrome();
 
             // Remove duplicated from unsortedList
-            list.RemoveDuplicatesFromUnsortedList();
-            Console.WriteLine("Elements after remvoing duplicates");
+            //list.RemoveDuplicatesFromUnsortedList();
+            //Console.WriteLine("Elements after remvoing duplicates");
+            //list.PrintListItemsRecursively();
+
+            // Add two linked lists.
+            list.AddTwoLinkedList();
+            Console.WriteLine("Elements after adding two linked lists");
             list.PrintListItemsRecursively();
         }
     }
