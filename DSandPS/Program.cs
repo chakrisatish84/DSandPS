@@ -104,6 +104,14 @@ namespace DSandPS
             // Swap nodes pairwise.
             list.SwapNodesPairwise();
             Console.WriteLine("Elements after swapping the elements pair wise");
+            // Remove duplicated from unsortedList
+            //list.RemoveDuplicatesFromUnsortedList();
+            //Console.WriteLine("Elements after remvoing duplicates");
+            //list.PrintListItemsRecursively();
+
+            // Add two linked lists.
+            list.AddTwoLinkedList();
+            Console.WriteLine("Elements after adding two linked lists");
             list.PrintListItemsRecursively();
 
         }
