@@ -706,6 +706,50 @@ namespace DSandPS.Models
 
         internal void SwapNodesPairwise()
         {
+
+            #region Logic1
+            //if (head == null || head.next == null)
+            //{
+            //    Console.WriteLine("List is empty (or) have only one element");
+            //    return;
+            //}
+
+            //SingleListNode p = head;
+            //SingleListNode q = null;
+            //SingleListNode ptr = null;
+            //SingleListNode new_header = null;
+
+            //new_header = p.next;
+
+            //while (p.next != null)
+            //{
+            //    q = p.next;
+            //    ptr = q.next;
+            //    q.next = p;
+
+            //    if (ptr == null || ptr.next == null)
+            //    {
+            //        //If list is odd number last node exists and need keep as is
+            //        if (ptr != null)
+            //        {
+            //            p.next = ptr;
+            //            p.next.next = null;
+            //            break;
+            //        }
+            //        else
+            //        {
+            //            p.next = null;
+            //            break;
+            //        }
+            //    }
+            //    p.next = ptr.next;
+            //    p = ptr;
+            //}
+
+            //head = new_header;
+            #endregion
+
+            #region Logic2
             if (head == null || head.next == null)
             {
                 Console.WriteLine("List is empty (or) have only one element");
@@ -713,38 +757,20 @@ namespace DSandPS.Models
             }
 
             SingleListNode p = head;
-            SingleListNode q = null;
-            SingleListNode ptr = null;
-            SingleListNode new_header = null;
+            SingleListNode q = head.next;
+            int temp;
 
-            new_header = p.next;
-
-            while (p.next != null)
+            while (q != null)
             {
-                q = p.next;
-                ptr = q.next;
-                q.next = p;
+                temp = p.data;
+                p.data = q.data;
+                q.data = temp;
 
-                if (ptr == null || ptr.next == null)
-                {
-                    //If list is odd number last node exists and need keep as is
-                    if (ptr != null)
-                    {
-                        p.next = ptr;
-                        p.next.next = null;
-                        break;
-                    }
-                    else
-                    {
-                        p.next = null;
-                        break;
-                    }
-                }
-                p.next = ptr.next;
-                p = ptr;
+                p = q.next;
+                q = p !=null ? p.next : null;
             }
 
-            head = new_header;
+            #endregion
         }
 
         internal void AddTwoLinkedList()
