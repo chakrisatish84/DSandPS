@@ -8,7 +8,7 @@ namespace DSandPS.Models
 {
     internal class ArrayCollection
     {
-        public int[] findTwoSum(int[] numbers, int target)
+        public int[] FindTwoSum(int[] numbers, int target)
         {
             int[] result = new int[2];
             if (numbers.Length > 1)
@@ -67,6 +67,27 @@ namespace DSandPS.Models
                     dictNumbers[firstNumnber] = i;
                 }
             }
+            return result;
+        }
+
+        internal IList<IList<int>> FindThreeSumasZero(int[] nums)
+
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            for (int i = 0; i < nums.Length - 2; i++)
+            {
+                for (int j = i + 1; j < nums.Length - 1; j++)
+                {
+                    for (int k = j + 1; k < nums.Length; k++)
+                    {
+                        if (nums[i] + nums[j] + nums[k] == 0)
+                        {
+                             result.Add(new List<int> { nums[i], nums[j], nums[k]});                            
+                        }
+                    }
+                }
+            }
+
             return result;
         }
     }

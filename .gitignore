@@ -7,3 +7,6 @@
 /.vs/ProjectSettings.json
 /.vs/VSWorkspaceState.json
 /DSandPS/obj/Release/.NETFramework,Version=v4.7.2.AssemblyAttributes.cs
+/DSandPS/packages/System.Collections.4.3.0
+/DSandPS/packages.config
+*.json
