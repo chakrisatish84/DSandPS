@@ -150,10 +150,19 @@ namespace DSandPS
             //[-2,0,1]
             //[-2,0,3]
 
-            int[] nums = { -2, 0, 1, 3 }; int target = 2;
+            //int[] nums = { -2, 0, 1, 3 }; int target = 2;
 
-            int threeSumSmaller = array.threeSumSmaller(nums, target);
+            //int threeSumSmaller = array.threeSumSmaller(nums, target);
 
+
+            //Given an integer array nums, return the number of triplets chosen from the array that can make triangles if we take them as side lengths of a triangle.
+            //Example 1:
+
+            //Input: nums = [2, 2, 3, 4]
+            //Output: 3
+
+            int[] nums = { 2, 2, 3, 4 };
+            array.findTrianglecombiatonTripplets(nums);
         }
 
 

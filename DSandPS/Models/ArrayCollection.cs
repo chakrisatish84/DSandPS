@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -215,6 +216,8 @@ namespace DSandPS.Models
             return target - diff;
         }
 
+
+
         internal int threeSumSmaller(int[] nums, int target)
         {
             int arrSize = nums.Length;
@@ -283,7 +286,7 @@ namespace DSandPS.Models
             {
                 int mid = (left + right + 1) / 2;
 
-                if(nums[mid] < target)
+                if (nums[mid] < target)
                 {
                     left = mid;
                 }
@@ -316,5 +319,30 @@ namespace DSandPS.Models
 
             return sum;
         }
+
+        internal int findTrianglecombiatonTripplets(int[] nums)
+        {
+            int count = 0;
+
+            if (nums.Length == 0 || nums.Length < 3)
+            {
+                return count;
+            }
+            for (int i = 0; i < nums.Length - 2; i++)
+            {
+                for (int j = i + 1; j < nums.Length - 1; j++)
+                {
+                    for (int k = j + 1; k < nums.Length; k++)
+                    {
+                        if (nums[i] + nums[j] > nums[k] && nums[i] + nums[k] > nums[j] && nums[j] + nums[k] > nums[i])
+                        {
+                            count++;
+                        }
+                    }
+                }
+            }
+            return count;
+        }
     }
 }
+
