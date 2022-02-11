@@ -328,19 +328,26 @@ namespace DSandPS.Models
             {
                 return count;
             }
-            for (int i = 0; i < nums.Length - 2; i++)
-            {
-                for (int j = i + 1; j < nums.Length - 1; j++)
-                {
-                    for (int k = j + 1; k < nums.Length; k++)
-                    {
-                        if (nums[i] + nums[j] > nums[k] && nums[i] + nums[k] > nums[j] && nums[j] + nums[k] > nums[i])
-                        {
-                            count++;
-                        }
-                    }
-                }
-            }
+
+            // Brute force (May get timeout error for big arrays).
+            //for (int i = 0; i < nums.Length - 2; i++)
+            //{
+            //    for (int j = i + 1; j < nums.Length - 1; j++)
+            //    {
+            //        for (int k = j + 1; k < nums.Length; k++)
+            //        {
+            //            if (nums[i] + nums[j] > nums[k] && nums[i] + nums[k] > nums[j] && nums[j] + nums[k] > nums[i])
+            //            {
+            //                count++;
+            //            }
+            //        }
+            //    }
+            //}
+
+            // Sort array elements
+            // Take two elements i,j
+            //Find the kth element where i+j > k matches.
+            //Since the array is sorted , if we find the kth element (with i,j combination  we will be having (j+1)+(k-1)-1 entries
             return count;
         }
     }
