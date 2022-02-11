@@ -117,15 +117,54 @@ namespace DSandPS
 
             ArrayCollection array = new ArrayCollection();
 
-            // Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+            // 1) Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 
             //You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
             //You can return the answer in any order.
 
-            int[] numnsArray = { -1, -2, -3, -4, -5 }; //{ 2, 7, 11, 15 };
+            //int[] numnsarray = { -1, -2, -3, -4, -5 }; //{ 2, 7, 11, 15 };
 
-            array.findTwoSum(numnsArray, -8);
+            //array.Findtwosum(numnsarray, -8);
+
+
+            // Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+            // Notice that the solution set must not contain duplicate triplets.
+
+            //int[] nums1 = { -2, 0, 0, 2, 2 }; // { -1, 0, 1, 2, -1, -4};
+            //IList<IList<int>> result = array.FindAllUniqueTripletsWithZeroSum(nums1);
+
+
+            //int[] nums = { -1, 2, 1, -4 };
+            //int target = 1;
+
+            //int sumofThreeIntegers = array.ThreeSumClosest(nums, target);
+
+
+            //Given an array of n integers nums and an integer target, find the number of index triplets i, j, k with 0 <= i < j < k < n that satisfy the condition
+            // nums[i] + nums[j] + nums[k] < target.
+
+            //        Input: nums = [-2, 0, 1, 3], target = 2
+            //Output: 2
+            //Explanation: Because there are two triplets which sums are less than 2:
+            //[-2,0,1]
+            //[-2,0,3]
+
+            //int[] nums = { -2, 0, 1, 3 }; int target = 2;
+
+            //int threeSumSmaller = array.threeSumSmaller(nums, target);
+
+
+            //Given an integer array nums, return the number of triplets chosen from the array that can make triangles if we take them as side lengths of a triangle.
+            //Example 1:
+
+            //Input: nums = [2, 2, 3, 4]
+            //Output: 3
+
+            int[] nums = { 0, 1, 1, 1 };//{ 2, 2, 3, 4 };
+            array.findTrianglecombiatonTripplets(nums);
         }
+
+
     }
 }
