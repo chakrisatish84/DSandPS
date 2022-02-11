@@ -348,7 +348,40 @@ namespace DSandPS.Models
             // Take two elements i,j
             //Find the kth element where i+j > k matches.
             //Since the array is sorted , if we find the kth element (with i,j combination  we will be having (j+1)+(k-1)-1 entries
+
+            Array.Sort(nums);
+
+            for (int i = 0; i < nums.Length - 2; i++)
+            {
+                int k = i + 2;
+                for (int j = i + 1; j < nums.Length - 1; j++)
+                {
+                    k = binarySearch(nums, k, nums.Length - 1, nums[i] + nums[j]);
+                    count += k - j - 1;
+                    if (count < 0)
+                    {
+                        count = 0;
+                    }
+                }
+            }
             return count;
+        }
+
+        private int binarySearch(int[] nums, int left, int right, int sum)
+        {
+            while (left <= right && right < nums.Length)
+            {
+                int mid = (left + right + 1) / 2;
+                if(nums[mid] >= sum)
+                {
+                    right = mid - 1;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+            return left;
         }
     }
 }

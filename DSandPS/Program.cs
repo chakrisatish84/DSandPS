@@ -161,7 +161,7 @@ namespace DSandPS
             //Input: nums = [2, 2, 3, 4]
             //Output: 3
 
-            int[] nums = { 2, 2, 3, 4 };
+            int[] nums = { 0, 1, 1, 1 };//{ 2, 2, 3, 4 };
             array.findTrianglecombiatonTripplets(nums);
         }
 
