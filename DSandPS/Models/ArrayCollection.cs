@@ -372,7 +372,7 @@ namespace DSandPS.Models
             while (left <= right && right < nums.Length)
             {
                 int mid = (left + right + 1) / 2;
-                if(nums[mid] >= sum)
+                if (nums[mid] >= sum)
                 {
                     right = mid - 1;
                 }
@@ -382,6 +382,49 @@ namespace DSandPS.Models
                 }
             }
             return left;
+        }
+
+        internal int DietPlanPerformance(int[] calories, int k, int lower, int upper)
+        {
+            int totalCalaries = 0;
+            int points = 0;
+
+            int start = 0;
+
+            if (calories.Length < k || k < 0)
+            {
+                Console.WriteLine("Invalid input");
+                return 0;
+            }
+
+            for (int i = 0; i < k; i++)
+            {
+                totalCalaries += calories[i];
+            }
+
+
+            for (int i = k; i < calories.Length; i++)
+            {
+                updatePoints(totalCalaries, lower, upper, ref points);
+                totalCalaries -= calories[start++];
+                totalCalaries += calories[i];
+            }
+            updatePoints(totalCalaries, lower, upper, ref points);
+            return points;
+        }
+
+        private void updatePoints(int totalCalaries, int lower, int upper, ref int points)
+        {
+
+            if (totalCalaries < lower)
+            {
+                points--;
+            }
+            if (totalCalaries > upper)
+            {
+                points++;
+            }
+
         }
     }
 }
