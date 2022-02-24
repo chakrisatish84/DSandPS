@@ -267,6 +267,7 @@ namespace DSandPS.Models
             return smallerCount;
         }
 
+
         private int twoSmallerBS(int[] nums, int startIndex, int target)
         {
             int sum = 0;
@@ -424,8 +425,197 @@ namespace DSandPS.Models
             {
                 points++;
             }
+        }
+
+        internal int LargestUniqueNumber(int[] nums)
+        {
+            int largetNumer = -1;
+
+            if (nums.Length <= 0)
+            {
+                return largetNumer;
+            }
+
+            // Sort the array.
+            Array.Sort(nums);
+
+            for (int i = nums.Length - 1; i >= 0; i--)
+            {
+                if (i == 0 || nums[i] != nums[i - 1])
+                {
+                    return nums[i];
+                }
+
+                while (i > 0 && nums[i] == nums[i - 1])
+                {
+                    i--;
+                }
+            }
+
+            return largetNumer;
 
         }
+
+        internal string FindTicTacToeGameWinner(List<KeyValuePair<int, int>> moves)
+        {
+            // create a board
+            //Board size
+            int boardSize = 3;
+            int[,] board = new int[boardSize, boardSize];
+            int player = 1; // Player 1
+
+            foreach (KeyValuePair<int, int> pair in moves)
+            {
+                int row = pair.Key;
+                int col = pair.Value;
+
+                // mark the current move and assign it to Players id (Starting is player 1)
+
+                board[row, col] = player;
+
+                //Check the winning condition with this move.
+
+                if (checkRow(row, player, board, boardSize) || checkColumn(col, player, board, boardSize) || (row == col && checkDiagonal(player, board, boardSize)) || (row + col == boardSize - 1 && checkAntiDiagonal(player, board, boardSize)))
+                {
+                    return player == 1 ? "A" : "B";
+                }
+
+                player *= -1;
+
+            }
+
+            return moves.Count == boardSize * boardSize ? "Draw" : "Pending";
+        }
+
+        internal string FindTicTacToeGameWinnerwithJaggedArray(int[][] testMoves)
+        {
+            // create a board
+            //Board size
+            int boardSize = 3;
+            int[,] board = new int[boardSize, boardSize];
+            int player = 1; // Player 1
+
+            foreach (var pair in testMoves)
+            {
+                int row = pair[0];
+                int col = pair[1];
+
+                // mark the current move and assign it to Players id (Starting is player 1)
+
+                board[row, col] = player;
+
+                //Check the winning condition with this move.
+
+                if (checkRow(row, player, board, boardSize) || checkColumn(col, player, board, boardSize) || (row == col && checkDiagonal(player, board, boardSize)) || (row + col == boardSize - 1 && checkAntiDiagonal(player, board, boardSize)))
+                {
+                    return player == 1 ? "A" : "B";
+                }
+
+                player *= -1;
+
+            }
+
+            return testMoves.Length == boardSize * boardSize ? "Draw" : "Pending";
+        }
+
+        private bool checkAntiDiagonal(int player, int[,] board, int boardSize)
+        {
+            for (int row = 0; row < boardSize; row++)
+            {
+                if (board[row, boardSize - 1 - row] != player) return false;
+            }
+            return true;
+        }
+
+        private bool checkDiagonal(int player, int[,] board, int boardSize)
+        {
+            for (int row = 0; row < boardSize; row++)
+            {
+                if (board[row, row] != player) return false;
+            }
+            return true;
+        }
+
+        private bool checkColumn(int col, int player, int[,] board, int boardSize)
+        {
+            for (int row = 0; row < boardSize; row++)
+            {
+                if (board[row, col] != player) return false;
+            }
+            return true;
+        }
+
+        private bool checkRow(int row, int player, int[,] board, int boardSize)
+        {
+            for (int col = 0; col < boardSize; col++)
+            {
+                if (board[row, col] != player) return false;
+            }
+            return true;
+        }
+
+
+        internal string FindTicTicGameWinnerRecordEachMove(int[][] testMoves)
+        {
+            int boardSize = 3;
+
+            Dictionary<int, int> rows = new Dictionary<int, int>(boardSize);
+            Dictionary<int, int> cols = new Dictionary<int, int>(boardSize);
+            int diagonal = 0, antiDiagonal = 0;
+
+            int player = 1;
+
+            foreach (var pair in testMoves)
+            {
+                int row = Math.Abs(pair[0]);
+                int col = Math.Abs(pair[1]);
+
+                //Update the row value and column value              
+
+                if (rows.ContainsKey(row))
+                {
+                    rows[row] += player;
+
+                }
+                else
+                {
+                    rows[row] = player;
+
+                }
+
+                if (cols.ContainsKey(col))
+                {
+                    cols[col] += player;
+
+                }
+                else
+                {
+                    cols[col] = player;
+
+                }
+
+
+                if (row == col)
+                {
+                    diagonal += player;
+                }
+
+                if (row + col == boardSize - 1)
+                {
+                    antiDiagonal += player;
+                }
+
+                if(Math.Abs((rows[row])) == boardSize || Math.Abs(cols[col]) == boardSize || Math.Abs(diagonal) == boardSize || Math.Abs(antiDiagonal) == boardSize)
+                {
+                    return player == 1 ? "A" : "B";
+                }
+
+                player = player * -1;
+            }
+
+            return testMoves.Length == boardSize * boardSize ? "Draw" : "Pending";
+        }
+
     }
 }
 
