@@ -176,12 +176,39 @@ namespace DSandPS
 
             //           Note that the total points can be negative.
 
-            int[] calories = { 6,5,0,0 };
-            int k = 2, lower = 3, upper = 5;
-            int totalPoints = array.DietPlanPerformance(calories, k, lower, upper);
+            //int[] calories = { 6,5,0,0 };
+            //int k = 2, lower = 3, upper = 5;
+            //int totalPoints = array.DietPlanPerformance(calories, k, lower, upper);
 
+
+            #region largestUniqueNumber
+
+            //            Given an integer array nums, return the largest integer that only occurs once. If no integer occurs once, return -1.
+
+
+
+            //Example 1:
+
+            //int[] nums = { 5, 7, 3, 9, 4, 9, 8, 3, 1 };
+            ////Output: 8
+            ////Explanation: The maximum integer in the array is 9 but it is repeated.The number 8 occurs only once, so it is the answer.
+            //int largestUniqueNumber = array.LargestUniqueNumber(nums);
+
+            #endregion
+
+            #region tic-toc-game-winner
+
+            List<KeyValuePair<int, int>> moves = new List<KeyValuePair<int, int>> { new KeyValuePair<int, int>(0, 0), new KeyValuePair<int, int>(1, 1), new KeyValuePair<int, int>(0, 1), new KeyValuePair<int, int>(1, 0), new KeyValuePair<int, int>(0, 2), new KeyValuePair<int, int>(1, 2), new KeyValuePair<int, int>(2, 1), new KeyValuePair<int, int>(2, 2), new KeyValuePair<int, int>(2, 0) };
+
+            int[][] testMoves = new int[][] { new int[] { 0, 0 }, new int[] { 1, 1 }, new int[] { 0, 1 }, new int[] { 1, 0 }, new int[] { 0, 2 }, new int[] { 1, 2 }, new int[] { 2, 1 }, new int[] { 2, 2 }, new int[] { 2, 0 } };
+
+            //Brute force
+            //array.FindTicTacToeGameWinner(test);
+            // array.FindTicTacToeGameWinnerwithJaggedArray(testMoves);
+
+            //Record each Move
+            array.FindTicTicGameWinnerRecordEachMove(testMoves);
+            #endregion
         }
-
-
     }
 }
