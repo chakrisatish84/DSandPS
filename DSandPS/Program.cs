@@ -24,8 +24,8 @@ namespace DSandPS
             list.create(arr);
 
             // Print the list items, Iterative way.
-            Console.WriteLine("Print all list elements");
-            list.PrintListElements();
+            //Console.WriteLine("Print all list elements");
+            //list.PrintListElements();
 
             //Print the list items using recursive way.
             //Console.WriteLine("Print all list element using recursive");
@@ -39,9 +39,9 @@ namespace DSandPS
             // Reverse Linked list with out recursion.
             //list.ReverseLinkedListitterative();
 
-            //Print the list items using recursive way.
-            Console.WriteLine("Print all list element using recursive");
-            list.PrintListItemsRecursively();
+            ////Print the list items using recursive way.
+            //Console.WriteLine("Print all list element using recursive");
+            //list.PrintListItemsRecursively();
 
             //// Insert element at the Begning.
             //list.InsertAtBegning();
@@ -102,9 +102,9 @@ namespace DSandPS
             //list.PrintListItemsRecursively();
 
             // Swap nodes pairwise.
-            list.SwapNodesPairwise();
-            Console.WriteLine("Elements after swapping the elements pair wise");
-            list.PrintListItemsRecursively();
+            //list.SwapNodesPairwise();
+            //Console.WriteLine("Elements after swapping the elements pair wise");
+            //list.PrintListItemsRecursively();
 
             // Add two linked lists.
             //list.AddTwoLinkedList();
@@ -209,6 +209,24 @@ namespace DSandPS
             //Record each Move
             array.FindTicTicGameWinnerRecordEachMove(testMoves);
             #endregion
+
+            //Add two Linked Lists.
+
+            //Create a Linked List
+            LinkedList list1 = new LinkedList();
+            list1.createLL(new int[] { 1, 2, 3, 4 });
+            //list1.print();
+            list1.PritnRecursivly();
+            //list1.reverseLL();
+            list1.reverseLLRecusiveLogic();
+            list1.PritnRecursivly();
+
+            //Add two numbers;
+            ListNode firstList = list1.createLL(new int[] { 9, 9, 9, 9, 9, 9, 9 });
+            ListNode secondList = list1.createLL(new int[] { 9, 9, 9, 9 });
+
+            ListNode SumList = list1.AddTWoNumbers(firstList, secondList);
+
         }
     }
 }
