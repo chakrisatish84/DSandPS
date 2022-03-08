@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\ArrayCollection.cs" />
+    <Compile Include="Models\LinkedList.cs" />
+    <Compile Include="Models\ListNode.cs" />
     <Compile Include="Models\SingleLinkedList.cs" />
     <Compile Include="Models\SingleListNode.cs" />
     <Compile Include="Program.cs" />

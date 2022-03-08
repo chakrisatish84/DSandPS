@@ -120,7 +120,7 @@ namespace DSandPS.Models
                 currentElement = nextElement;
 
             }
-
+            currentElement.next = previousElement;
             head = previousElement;
         }
 

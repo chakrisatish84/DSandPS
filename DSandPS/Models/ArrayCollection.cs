@@ -605,7 +605,7 @@ namespace DSandPS.Models
                     antiDiagonal += player;
                 }
 
-                if(Math.Abs((rows[row])) == boardSize || Math.Abs(cols[col]) == boardSize || Math.Abs(diagonal) == boardSize || Math.Abs(antiDiagonal) == boardSize)
+                if (Math.Abs((rows[row])) == boardSize || Math.Abs(cols[col]) == boardSize || Math.Abs(diagonal) == boardSize || Math.Abs(antiDiagonal) == boardSize)
                 {
                     return player == 1 ? "A" : "B";
                 }
@@ -615,7 +615,6 @@ namespace DSandPS.Models
 
             return testMoves.Length == boardSize * boardSize ? "Draw" : "Pending";
         }
-
     }
 }
 
