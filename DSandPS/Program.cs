@@ -213,20 +213,25 @@ namespace DSandPS
             //Add two Linked Lists.
 
             //Create a Linked List
-            LinkedList list1 = new LinkedList();
-            list1.createLL(new int[] { 1, 2, 3, 4 });
-            //list1.print();
-            list1.PritnRecursivly();
-            //list1.reverseLL();
-            list1.reverseLLRecusiveLogic();
-            list1.PritnRecursivly();
+            //LinkedList list1 = new LinkedList();
+            //list1.createLL(new int[] { 1, 2, 3, 4 });
+            ////list1.print();
+            //list1.PritnRecursivly();
+            ////list1.reverseLL();
+            //list1.reverseLLRecusiveLogic();
+            //list1.PritnRecursivly();
 
-            //Add two numbers;
-            ListNode firstList = list1.createLL(new int[] { 9, 9, 9, 9, 9, 9, 9 });
-            ListNode secondList = list1.createLL(new int[] { 9, 9, 9, 9 });
+            ////Add two numbers;
+            //ListNode firstList = list1.createLL(new int[] { 9, 9, 9, 9, 9, 9, 9 });
+            //ListNode secondList = list1.createLL(new int[] { 9, 9, 9, 9 });
 
-            ListNode SumList = list1.AddTWoNumbers(firstList, secondList);
+            //ListNode SumList = list1.AddTWoNumbers(firstList, secondList);
 
+
+
+            // Longest Substring without repeating characters.
+            string sText = "acabcbb";
+            array.LengthOfLongestSubString(sText);
         }
     }
 }
