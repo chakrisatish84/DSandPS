@@ -615,6 +615,72 @@ namespace DSandPS.Models
 
             return testMoves.Length == boardSize * boardSize ? "Draw" : "Pending";
         }
+
+        internal void LengthOfLongestSubString(string sText)
+        {
+            //char[] charText = sText.ToCharArray();
+            //int res = 0;
+            //int startCharIndex = 0, endCharIndex = 0;
+            //for (int i = 0; i < charText.Length; i++)
+            //{
+            //    for (int j = i; j < charText.Length; j++)
+            //    {
+            //        if (checkRepeatOptions(sText, i, j))
+            //        {
+            //            if (res < j - i + 1)
+            //            {
+            //                startCharIndex = i;
+            //                endCharIndex = j - i + 1;
+            //            }
+            //            res = Math.Max(res, j - i + 1);
+
+            //        }
+            //    }
+            //}
+
+
+            ////Print the characters from string. 
+            //Console.WriteLine(sText.ToCharArray(startCharIndex, endCharIndex));
+
+            //Logic using sliding window.
+            //Two pointer logic.
+            int a_pointer = 0;
+            int b_pointer = 0;
+            int max = 0;
+
+            HashSet<char> charSet = new HashSet<char>();
+            while (b_pointer < sText.Length)
+            {
+                if (!charSet.Contains(sText[b_pointer]))
+                {
+                    charSet.Add(sText[b_pointer]);
+                    b_pointer++;
+                    max = Math.Max(max, charSet.Count);
+                }
+                else
+                {
+                    charSet.Remove(sText[a_pointer]);
+                    a_pointer++;
+                }
+            }
+        }
+
+        private bool checkRepeatOptions(string sText, int start, int end)
+        {
+            int[] chars = new int[128];
+
+            for (int i = start; i <= end; i++)
+            {
+                char c = sText[i];
+                chars[c]++;
+
+                if (chars[c] > 1)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
 
