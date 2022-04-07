@@ -238,9 +238,7 @@ namespace DSandPS
 
             string sText = "eceba";
             array.LengthOfLongestSubStringTwoDistinct(sText);
-
         }
-
     }
 }
 
