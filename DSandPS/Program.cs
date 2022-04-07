@@ -207,7 +207,7 @@ namespace DSandPS
             // array.FindTicTacToeGameWinnerwithJaggedArray(testMoves);
 
             //Record each Move
-            array.FindTicTicGameWinnerRecordEachMove(testMoves);
+            // array.FindTicTicGameWinnerRecordEachMove(testMoves);
             #endregion
 
             //Add two Linked Lists.
@@ -229,9 +229,18 @@ namespace DSandPS
 
 
 
-            // Longest Substring without repeating characters.
-            string sText = "acabcbb";
-            array.LengthOfLongestSubString(sText);
+            //Longest Substring without repeating characters.
+            //string sText = "acabcbb";
+            //array.LengthOfLongestSubString(sText);
+
+            //Longest Substring with At Most Two Distinct Characters
+            //Given a string s, return the length of the longest substring that contains at most two distinct characters.
+
+            string sText = "eceba";
+            array.LengthOfLongestSubStringTwoDistinct(sText);
+
         }
+
     }
 }
+

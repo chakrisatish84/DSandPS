@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -117,7 +119,7 @@ namespace DSandPS.Models
             //        continue;
             //    }
 
-            //    //If current value is greater than break from the loop.
+            //    //If current value is greater than break from the loop. (Since this is sorted i is greater than o remaining all are greater than 0.
             //    if(nums[i] > 0)
             //    {
             //        continue;
@@ -680,6 +682,54 @@ namespace DSandPS.Models
                 }
             }
             return true;
+        }
+
+        internal int LengthOfLongestSubStringTwoDistinct(string sText)
+        {
+            char[] charText = sText.ToCharArray();
+
+            int stringLength = charText.Length;
+
+            if (stringLength < 1)
+            {
+                Console.WriteLine("Invalid Input");
+            }
+
+            int LeftIndex = 0, rightIndex = 0, MaxLengthSofar = 0;
+
+            Dictionary<char, int> dicResult = new Dictionary<char, int>();
+
+            while (rightIndex < stringLength)
+            {
+                if (!dicResult.ContainsKey(sText[rightIndex]))
+                {
+                    dicResult.Add(sText[rightIndex], rightIndex);
+                }
+                else
+                {
+                    dicResult[sText[rightIndex]] = rightIndex;
+                }
+                int minValue = int.MaxValue;
+                int smallestIndex = 0;
+                if (dicResult.Count() == 3)
+                {
+                    foreach (KeyValuePair<char, int> kvp in dicResult)
+                    {
+                        if (kvp.Value < minValue)
+                        {
+                            smallestIndex = kvp.Value;
+                            minValue = kvp.Value;
+                        }
+                    }
+
+                    dicResult.Remove(sText[smallestIndex]);
+                    LeftIndex = smallestIndex + 1;
+                }
+                MaxLengthSofar = Math.Max(MaxLengthSofar, rightIndex - LeftIndex + 1);
+                rightIndex++;
+            }
+
+            return MaxLengthSofar;
         }
     }
 }
