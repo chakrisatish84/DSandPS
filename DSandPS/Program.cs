@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -230,14 +231,121 @@ namespace DSandPS
 
 
             //Longest Substring without repeating characters.
-            //string sText = "acabcbb";
+            //string sText = "abcabcbb"; // "abcabcbb";
             //array.LengthOfLongestSubString(sText);
+
+            // Failed scenarios (" "(1), "" (0), "c" (1)), "aab"(1, 2)(expected 2, output 1), "dvdf"(3, 2)
 
             //Longest Substring with At Most Two Distinct Characters
             //Given a string s, return the length of the longest substring that contains at most two distinct characters.
 
-            string sText = "eceba";
-            array.LengthOfLongestSubStringTwoDistinct(sText);
+            //string sText = "eceba";
+            //array.LengthOfLongestSubStringTwoDistinct(sText);
+
+            // LongestPalindrome substring
+            //string sText = "aaaaa"; //babad, aa, ccc, "aacabdkacaa", "abacab", "aaaabaaa", "aaaabaaa","aaaaa"
+            //array.LongestPalindromeSubString(sText);
+
+            // Zigzag Conversion
+            //string sText = "PAYPALISHIRING";
+            //array.ZigzagConvert(sText, 4);
+
+            // Reverse Integer
+            //int number = 123;
+            //array.ReverseInteger(number);
+
+            //Convert String to Integer (MyAtoi)
+            //string sText = " -41-93";
+            //array.ConvertStringToInteger(sText);
+
+            //Convert int to Roman value.
+            //int num = 320;
+            //array.ConvertInttoRoman(num);
+
+            //Conver Roman to Int.
+            //string romanValue = "MCMXCIV"; //III
+            //array.ConvertRomantoInt(romanValue);
+
+            //Longest Common Prefix.
+            //Write a function to find the longest common prefix string amongst an array of strings.
+            //string[] strs = { "flower", "flow", "flight" };
+            //array.LongestCommonPrefix(strs);
+
+            // Container with Most Water.
+            // You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+            //int[] height = { 1, 8, 6, 2, 5, 4, 8, 3, 7 };
+            //array.containerWithMostWater(height);
+
+            // Letter Combinations of a Phone Number
+            // Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+            //string digits = "23";
+            //array.LetterCombinations(digits);
+
+            // Valid Parentheses
+            //string symbol = "()[]{}";
+            //array.ValidParantheses(symbol);
+
+            // Generate Parentheses
+            // Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+            //int number = 3;
+            //array.GenerateParenthesis(number);
+
+            // Remove Duplicates from Sorted Array
+            //int[] arrayElements = { 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 };
+            //array.removeDuplicateElements(arrayElements);
+
+            // Remove Element
+
+            //int[] arrayElements = { 0, 1, 2, 2, 3, 0, 4, 2 };
+            //int val = 2; // Remove all 2 number elements.
+            //array.removeElement(arrayElements, val);
+
+            // Find the Index of the First Occurrence in a String
+            //string haystack = "sadbutsad", needle = "sad";
+            //array.findFirstOccurance(haystack, needle);
+
+            // Divide Two Integers
+            // Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.
+            // Need to handle overlfow exception too.
+
+            //int dividend = -1, divisor = -1; //10/-3
+            //array.DividetwoIntegers(dividend, divisor);
+
+            // Substring with Concatenation of All Words
+            // You are given a string s and an array of strings words. All the strings of words are of the same length.
+
+            //string mainWord = "barfoothefoobarman";
+            //string[] words = { "foo", "bar"};
+            //array.FindSubstring(mainWord, words);
+
+            //Longest Valid Parentheses
+            //string symbol = ")()())";
+            //array.LongestValidParentheses(symbol);
+
+            // Search in Rotated Sorted Array
+            //int[] arrayItems = { 4, 5, 6, 7, 8, 9, 0, 1, 2, 3 };
+            //array.SearchinRotatedSortedArray(arrayItems, 2);
+
+            // Find First and Last Position of Element in Sorted Array
+            //int[] nums = { 5, 7, 7, 8, 8, 10 };
+            //array.findFirstandLastOuccranceinArray(nums, 8);
+
+
+            // Valid Sudoku
+            //string[,] board = new string[9, 9] { { "5", "3", ".", ".", "7", ".", ".", ".", "." },{"6", ".", ".", "1", "9", "5", ".", ".", "." }
+            //                                    ,{".", "9", "8", ".", ".", ".", ".", "6", "." } ,{"8", ".", ".", ".", "6", ".", ".", ".", "3" }
+            //                                    ,{"4", ".", ".", "8", ".", "3", ".", ".", "1" } ,{"7", ".", ".", ".", "2", ".", ".", ".", "6" }
+            //                                    ,{".", "6", ".", ".", ".", ".", "2", "8", "." } ,{".", ".", ".", "4", "1", "9", ".", ".", "5" }
+            //                                    ,{".", ".", ".", ".", "8", ".", ".", "7", "9" } };
+
+            //array.IsValidSudoku(board);
+
+            // Combination Sum
+            // Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
+
+            // The same number may be chosen from candidates an unlimited number of times.Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+            int[] candidates = { 2,3,5}; int target = 8; //2, 3, 6, 7  (7)
+            array.combinationSum(candidates, target);
         }
     }
 }

@@ -2,12 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DSandPS.Models
@@ -620,6 +624,19 @@ namespace DSandPS.Models
 
         internal void LengthOfLongestSubString(string sText)
         {
+            if (string.IsNullOrEmpty(sText.Trim()))
+            {
+                if (sText == "")
+                {
+                    Console.WriteLine("Count: 0");
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Count: 1");
+                    return;
+                }
+            }
             //char[] charText = sText.ToCharArray();
             //int res = 0;
             //int startCharIndex = 0, endCharIndex = 0;
@@ -645,10 +662,14 @@ namespace DSandPS.Models
             //Console.WriteLine(sText.ToCharArray(startCharIndex, endCharIndex));
 
             //Logic using sliding window.
-            //Two pointer logic.
+            //Two pointer logic. (It will work if we want to know only the count, if we want to see the result then it might not work)
             int a_pointer = 0;
             int b_pointer = 0;
             int max = 0;
+            int maxSoFar = 0;
+
+            //Place unique items in Hash table
+            HashSet<string> resultSet = new HashSet<string>();
 
             HashSet<char> charSet = new HashSet<char>();
             while (b_pointer < sText.Length)
@@ -661,10 +682,75 @@ namespace DSandPS.Models
                 }
                 else
                 {
+                    if (max > maxSoFar)
+                    {
+                        resultSet.Clear();
+                    }
+                    if (max <= charSet.Count)
+                    {
+                        maxSoFar = max;
+                        if (!resultSet.Contains(sText.Substring(a_pointer, b_pointer - a_pointer)))
+                        {
+                            resultSet.Add(sText.Substring(a_pointer, b_pointer - a_pointer));
+                        }
+
+                    }
                     charSet.Remove(sText[a_pointer]);
                     a_pointer++;
                 }
             }
+
+            if (max > maxSoFar)
+            {
+                resultSet.Clear();
+            }
+            if (max >= maxSoFar && max <= charSet.Count)
+            {
+                if (!resultSet.Contains(sText.Substring(a_pointer, b_pointer - a_pointer)))
+                {
+                    resultSet.Add(sText.Substring(a_pointer, b_pointer - a_pointer));
+                }
+            }
+            Console.WriteLine(String.Join(", ", resultSet) + " Count is " + max);
+
+            ///Logic to get Count and  substring. (This is having so many issues with different strings)
+            // 1) If string is empty (or) emptry space (return 0 (or) 1)
+            // 1) Create  hashset, result string, result Lengh variables
+            // 2) Loop through and add characters in Hashset (if we don't have already, if you find move to step 3)
+            // 3) If we find any element in store hash set result and empty the hashset resuult (Note: before stroing check the lenth is smaller than new hashset values else just empty the hashset and proceed).
+            // 4) If there are no duplicates retrun the final string.
+
+            //HashSet<char> charSet = new HashSet<char>();
+            //string result = "";
+            //int resultCount = 0;
+
+            //char[] chars = sText.ToCharArray();
+
+            //for (int i = 0; i < chars.Length; i++)
+            //{
+            //    if (!charSet.Contains(chars[i]))
+            //    {
+            //        charSet.Add(chars[i]);
+            //    }
+            //    else
+            //    {
+            //        if(charSet.Count > resultCount)
+            //        {
+            //            resultCount = charSet.Count;
+            //            result = new string(charSet.ToArray());
+            //            charSet.Clear();
+            //            charSet.Add(chars[i]);
+            //        }
+            //    }
+            //}
+            //if (charSet.Count > resultCount) //That means no duplicates
+            //{
+            //    resultCount = charSet.Count;
+            //    result = new string(charSet.ToArray());
+            //}
+            //Console.WriteLine(result + " and the count is " + resultCount);          
+
+
         }
 
         private bool checkRepeatOptions(string sText, int start, int end)
@@ -730,6 +816,1040 @@ namespace DSandPS.Models
             }
 
             return MaxLengthSofar;
+        }
+
+        public string LongestPalindromeSubString(string sText)
+        {
+            string result = "";
+            if (sText.Length <= 1)
+            {
+                return sText;
+            }
+
+            #region kind of brute force using two pointers 
+            //// This logic is giving Time Limit Exceeded error.
+            ////Taking two pointers (first point is i and second pointer is i+1)
+            //// loop through second pointer reached end of the array and find the current palindromic sub string.
+            //// Increase the first Potiner and reeat the step2 and Step3.
+
+            ////This solution is working but it take lot of time.
+
+            //HashSet<string> resultSet = new HashSet<string>();
+
+            //int aPointer = 0, bPointer = 1;
+            //string currentPalindromeSubString = "";
+            //string previousPalindromeSubString = "";
+            //for (; aPointer < sText.Length - 1; aPointer++)
+            //{
+            //    bPointer = aPointer + 1;
+            //    while (bPointer < sText.Length)
+            //    {
+            //        string subString = sText.Substring(aPointer, bPointer - aPointer + 1);
+            //        if (checkSubstringisPallindrome(subString))
+            //        {
+            //            currentPalindromeSubString = subString;
+            //            bPointer++;
+            //        }
+            //        else
+            //        {
+            //            if (!string.IsNullOrEmpty(currentPalindromeSubString) && currentPalindromeSubString.Length >= previousPalindromeSubString.Length && currentPalindromeSubString != previousPalindromeSubString)
+            //            {
+            //                if(currentPalindromeSubString.Length > previousPalindromeSubString.Length && resultSet.Any() && currentPalindromeSubString.Length > resultSet.FirstOrDefault().Length)
+            //                {
+            //                    resultSet.Clear();
+            //                }
+            //                previousPalindromeSubString = currentPalindromeSubString;
+            //                resultSet.Add(currentPalindromeSubString);
+            //                bPointer++;
+
+            //            }
+            //            else
+            //            {
+            //                bPointer++;
+            //            }
+            //        };
+            //    }
+
+            //    if (!string.IsNullOrEmpty(currentPalindromeSubString) && currentPalindromeSubString.Length >= previousPalindromeSubString.Length && !resultSet.Contains(currentPalindromeSubString)){
+            //        if (currentPalindromeSubString.Length > previousPalindromeSubString.Length && resultSet.Any() && currentPalindromeSubString.Length > resultSet.FirstOrDefault().Length)
+            //        {
+            //            resultSet.Clear();
+            //        }
+            //        resultSet.Add(currentPalindromeSubString);
+            //    }
+            //}
+
+            //if (resultSet.Count > 0 || !string.IsNullOrEmpty(currentPalindromeSubString))
+            //{
+            //    if (resultSet.Count == 0 && !string.IsNullOrEmpty(currentPalindromeSubString))
+            //    {
+            //        result = currentPalindromeSubString;
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine(string.Join(", ", resultSet));
+            //        result = resultSet.First();
+            //    }
+            //}
+            //else
+            //{
+            //    result = sText.First().ToString();
+            //}
+            #endregion
+
+            #region expandMiddle Logic
+            //int start = 0, end = 0;
+            //for (int i = 0; i < sText.Length; i++)
+            //{
+            //    int len1 = expandFromMiddle(sText, i, i);
+            //    int len2 = expandFromMiddle(sText, i, i + 1);
+            //    int len = Math.Max(len1, len2);
+
+            //    if (len > end - start)
+            //    {
+            //        start = i - ((len - 1) / 2);
+            //        end = i + (len / 2);
+            //    }
+            //}
+
+            //result = sText.Substring(start, end + 1);
+
+            #endregion
+
+            #region Dynamic Progrmaing
+            // Created 2 dimensional array
+            // if text lenth is lest than 1 return the input string.
+            // Loop through all the elements from len >= 3  (if it is two the logic might not work
+            // If we update table with 1 and 2 elements then we can run the DP.
+
+            int[,] resultTable = new int[sText.Length, sText.Length];
+            string palindromSubStringSoFar = "";
+
+            for (int i = 0; i < sText.Length; i++)
+            {
+                resultTable[i, i] = 1;
+                if (i + 1 < sText.Length)
+                {
+                    if (sText[i] == sText[i + 1] && palindromSubStringSoFar == "")
+                    {
+                        palindromSubStringSoFar = sText.Substring(i, 2);
+                    }
+                    resultTable[i, i + 1] = sText[i] == sText[i + 1] ? 1 : 0;
+                }
+
+            }
+
+            for (int i = 0; i < sText.Length; i++)
+            {
+                int k = 0;
+                for (int j = i + 2; j < sText.Length; j++)
+                {
+                    if (sText[k] == sText[j] && resultTable[k + 1, j - 1] == 1)
+                    {
+                        string currentPalindromicSubstring = sText.Substring(k, j - k + 1);
+                        if (palindromSubStringSoFar.Length < currentPalindromicSubstring.Length)
+                        {
+                            palindromSubStringSoFar = currentPalindromicSubstring;
+                        }
+                        resultTable[k, j] = 1;
+                    }
+                    k++;
+                }
+
+            }
+            if (string.IsNullOrEmpty(palindromSubStringSoFar))
+            {
+                palindromSubStringSoFar = sText[0].ToString();
+            }
+
+            result = palindromSubStringSoFar;
+            #endregion Dynamic 
+
+            return result;
+        }
+
+        private int expandFromMiddle(string sText, int left, int right)
+        {
+            if (string.IsNullOrEmpty(sText) || left > right) return 0;
+
+            while (left >= 0 && right < sText.Length && sText[left] == sText[right])
+            {
+                left--;
+                right++;
+            }
+
+            return right - left - 1;
+        }
+
+        private bool checkSubstringisPallindrome(string subString)
+        {
+            int i = 0, j = subString.Length - 1;
+
+            for (; i < j; i++, j--)
+            {
+                if (subString[i] != subString[j])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        //if we place the input string in zig Zag order as the numberof rows specified, we need to pring out in row wise.
+
+        internal string ZigzagConvert(string sText, int numberOfRows)
+        {
+            string result = "";
+            if (numberOfRows <= 1)
+            {
+                result = sText;
+            }
+            else
+            {
+                StringBuilder sbResult = new StringBuilder();
+
+                int cycleLength = 2 * numberOfRows - 2;
+
+                for (int i = 0; i < numberOfRows; i++)
+                {
+                    for (int j = 0; j + i < sText.Length; j += cycleLength)
+                    {
+                        sbResult.Append(sText[j + i]);
+                        if (i != 0 && i != numberOfRows - 1 && j + cycleLength - i < sText.Length)
+                        {
+                            sbResult.Append(sText[j + cycleLength - i]);
+                        }
+                    }
+                }
+
+                result = sbResult.ToString();
+            }
+
+            return result;
+        }
+
+        internal int ReverseInteger(int num)
+        {
+            int pop = 0, rev = 0;
+
+            if (num == 0 && num.ToString().Length == 1)
+            {
+                return num;
+            }
+
+            while (num != 0)
+            {
+
+                pop = num % 10;
+                num = num / 10;
+
+                // Make sure it is not overflow the number
+                //Check that before adding multiplication
+
+                Console.WriteLine(string.Format("Divide {0}, Module {1}", int.MaxValue / 10, int.MaxValue % 10));
+
+                if (rev > int.MaxValue / 10 || rev == int.MaxValue / 10 && pop > 7) return 0;
+                if (rev < int.MinValue / 10 || rev == int.MaxValue / 10 && pop < -8) return 0;
+
+                rev = rev * 10 + pop;
+            }
+            return rev;
+        }
+
+
+        internal int ConvertStringToInteger(string sText)
+        {
+            // Text is not empty
+            // Text is having any empty spaces at the begning (if there are any trim that) and if number starts with 0 trim that too
+            // Text is having any Symbol at the begning (+ (or) -) , If we are having more than one symbol at the begning return and say it is invalid.
+            // loop through the digits. if you find any not digit charater stop return the current value
+
+            //To get current value use this logic (0 * 10 + digit).
+
+            int result = 0;
+            int currIndex = 0;
+            int textLength = sText.Length;
+            int sign = 1;
+
+            if (string.IsNullOrEmpty(sText)) return result;
+
+            while (currIndex < textLength && (sText[currIndex].ToString() == " " || sText[currIndex].ToString() == "0"))
+            {
+                currIndex++;
+            }
+
+            if (currIndex < textLength && sText[currIndex].ToString() == "+")
+            {
+                sign = 1;
+                currIndex++;
+            }
+            else if (currIndex < textLength && sText[currIndex].ToString() == "-")
+            {
+                sign = -1;
+                currIndex++;
+            }
+
+            while (currIndex < textLength && char.IsDigit(sText[currIndex]))
+            {
+                int digit = sText[currIndex] - '0';
+
+                if (result > int.MaxValue / 10 || (result == int.MaxValue / 10 && digit > int.MaxValue % 10))
+                {
+                    //over flow reutr 2^31-1, underflowed return -2^31
+                    return sign == 1 ? int.MaxValue : int.MinValue;
+                }
+
+                result = result * 10 + digit; // There might be a chance of overflow exception, So the conditions before calculating this one
+
+                currIndex++;
+            }
+
+            Console.WriteLine(sign * result);
+            return sign * result;
+
+
+        }
+
+        internal string ConvertInttoRoman(int num)
+        {
+            string result = "";
+            if (num <= 0)
+            {
+                return result;
+            }
+            // Max roman Value is 1000 (M).
+            // So First create possible values and corresponding roman symbols. (note 4 is not IIII and it shoud be IV and same to other).
+
+            int[] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+            string[] symbols = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+
+            StringBuilder sbResult = new StringBuilder();
+            for (int i = 0; i < values.Length && num > 0; i++)
+            {
+                while (values[i] <= num)
+                {
+                    num = num - values[i];
+
+                    //When value is less than the num, add corresponding numner and subract number from that value and continue the loop.
+                    sbResult.Append(symbols[i]);
+
+                }
+
+            }
+
+            result = sbResult.ToString();
+
+            return result;
+        }
+
+        internal int ConvertRomantoInt(string romanValue)
+        {
+            int result = 0;
+            //if roman value is empty return
+            if (string.IsNullOrEmpty(romanValue)) return result;
+
+            int[] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+            string[] symbols = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+
+            //// Loop through all the characters 
+
+            //for (int i = 0; i < romanValue.Length; i++)
+            //{
+            //    string subString = "";
+            //    bool subStringFoundInSymbols = false;
+            //    //take two letters and check if that sumbol is present in Symbols list.
+            //    if (i + 1 < romanValue.Length)
+            //    {
+            //        subString = romanValue.Substring(i, 2);
+            //        if (symbols.Contains(subString))
+            //        {
+            //            subStringFoundInSymbols = true;
+            //            i++;
+            //        }
+            //    }
+            //    if (!subStringFoundInSymbols)
+            //    {
+            //        subString = romanValue[i].ToString();
+            //        subStringFoundInSymbols = false;
+            //    }
+
+            //    int j = 0;
+            //    while (j < symbols.Length)
+            //    {
+            //        if (symbols[j] == subString)
+            //        {
+            //            result += values[j];
+            //            break;
+            //        }
+            //        j++;
+            //    }
+            //}
+
+            //Using dictionary.
+            Dictionary<string, int> dicSymbolsandValues = new Dictionary<string, int>();
+
+            for (int i = 0; i < values.Length; i++)
+            {
+                dicSymbolsandValues.Add(symbols[i], values[i]);
+            }
+
+            for (int i = 0; i < romanValue.Length; i++)
+            {
+                string subString = "";
+                bool subStringFoundInSymbols = false;
+                if (i + 1 < romanValue.Length)
+                {
+                    subString = romanValue.Substring(i, 2);
+                    if (dicSymbolsandValues.ContainsKey(subString))
+                    {
+                        i++;
+                        subStringFoundInSymbols = true;
+                    }
+                }
+                if (!subStringFoundInSymbols)
+                {
+                    subString = romanValue.Substring(i, 1);
+                    subStringFoundInSymbols = false;
+                }
+
+                result += dicSymbolsandValues[subString];
+            }
+            return result;
+
+        }
+
+        internal string LongestCommonPrefix(string[] strs)
+        {
+            string result = "";
+
+            // 1) if strs length is 0 , return emtpty string
+            // 2) Take default LCP as first string.
+            // 3) Lopp through all other string and check for prefix and generate a new prefix by triming the last character
+            if (strs.Length <= 0) return result;
+
+            //string lcp = strs[0];
+
+            //for (int i = 1; i < strs.Length; i++)
+            //{
+            //    while (strs[i].IndexOf(lcp) != 0)
+            //    {                    
+            //        lcp = lcp.Substring(0, lcp.Length - 1);
+
+            //        if (lcp.Length == 0)
+            //        {
+
+            //            return result;
+            //        }
+            //    }
+            //}
+            //result = lcp;
+
+            //return result;
+
+            //Divide and Conquer Logic.
+
+            result = longetsCommonPrefix(strs, 0, strs.Length - 1);
+
+            return result;
+        }
+
+        private string longetsCommonPrefix(string[] strs, int left, int right)
+        {
+            if (left == right)
+            {
+                return strs[left];
+            }
+
+            else
+            {
+                int mid = (left + right) / 2;
+                string sLeft = longetsCommonPrefix(strs, left, mid);
+                string sRight = longetsCommonPrefix(strs, mid + 1, right);
+                return commonprefix(sLeft, sRight);
+            }
+        }
+
+        private string commonprefix(string sLeft, string sRight)
+        {
+            int min = Math.Min(sLeft.Length, sRight.Length);
+
+            for (int i = 0; i < min; i++)
+            {
+                if (sLeft[i].ToString() != sRight[i].ToString())
+                {
+                    return sLeft.Substring(0, i);
+                }
+            }
+            return sLeft.Substring(0, min);
+        }
+
+        internal int containerWithMostWater(int[] height)
+        {
+            int result = 0;
+            if (height.Length <= 1)
+            {
+                return result;
+            }
+
+            int heightLength = height.Length;
+            int first = 0, last = heightLength - 1;
+            while (first < last)
+            {
+                int width = last - first;
+                result = Math.Max(result, Math.Min(height[first], height[last]) * width);
+
+                if (height[first] < height[last])
+                {
+                    first++;
+                }
+                else
+                {
+                    last--;
+                }
+            }
+
+            return result;
+        }
+
+        internal IList<string> LetterCombinations(string digits)
+        {
+            //create string array of Symbols.
+            // create a dictionray with numnber and corresponding symbols.
+            // Loop thorugh all the characters in the input (Assumption of max two characters) 
+            List<string> result = new List<string>();
+            if (string.IsNullOrEmpty(digits)) return result;
+
+            //dictionary of numbers and corresponding symboxl
+            Dictionary<int, string> dicValueSymbpols = new Dictionary<int, string>();
+
+            string[] symbols = { "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+            string phoneDigits = digits;
+
+
+            for (int i = 0; i <= 7; i++)
+            {
+                dicValueSymbpols.Add(i + 2, symbols[i]);
+            }
+
+            backtrack(0, new StringBuilder(), phoneDigits, result, dicValueSymbpols);
+
+            return result;
+
+        }
+
+        private void backtrack(int index, StringBuilder path, string phoneDigits, List<string> result, Dictionary<int, string> dicValueSymbpols)
+        {
+            //Get symbols for current index
+            if (phoneDigits.Length == path.Length)
+            {
+                result.Add(path.ToString());
+                return;
+            }
+
+
+            //Get symbols for current index digit that maps to and loop through them.
+            string possibleLetters = dicValueSymbpols[phoneDigits[index] - '0'];
+
+            for (int i = 0; i < possibleLetters.Length; i++)
+            {
+                path.Append(possibleLetters[i].ToString());
+
+                backtrack(index + 1, path, phoneDigits, result, dicValueSymbpols);
+
+                path.Remove(path.Length - 1, 1);
+            }
+        }
+
+        internal bool ValidParantheses(string symbol)
+        {
+            bool isValid = false;
+            if (string.IsNullOrEmpty(symbol) || symbol.Length == 1) return isValid;
+
+            // First generate the mappings.
+            Dictionary<string, string> dicMatchingSymbols = new Dictionary<string, string>();
+            dicMatchingSymbols.Add(")", "(");
+            dicMatchingSymbols.Add("}", "{");
+            dicMatchingSymbols.Add("]", "[");
+
+            Stack<string> stack = new Stack<string>();
+
+            for (int i = 0; i < symbol.Length; i++)
+            {
+                if (symbol[i].ToString() == "(" || symbol[i].ToString() == "{" || symbol[i].ToString() == "[")
+                {
+                    stack.Push(symbol[i].ToString());
+                }
+                else
+                {
+                    if (stack.Count == 0) { return isValid; }
+                    string popSymbol = stack.Pop();
+
+                    // Check that is valid close symbol by comapring with popped element
+                    if (dicMatchingSymbols[symbol[i].ToString()] != popSymbol)
+                    {
+                        return isValid;
+                    }
+                }
+            }
+
+            if (stack.Count == 0)
+            {
+                isValid = true;
+            }
+
+            return isValid;
+        }
+
+        internal IList<string> GenerateParenthesis(int number)
+        {
+
+            List<string> lstResult = new List<string>();
+
+            if (number < 1) return lstResult;
+
+            generateAll(new char[2 * number], 0, lstResult);
+
+            return lstResult;
+        }
+
+        private void generateAll(char[] current, int pos, List<string> lstResult)
+        {
+            if (pos == current.Length)
+            {
+                if (valid(current))
+                    lstResult.Add(new String(current));
+            }
+            else
+            {
+                current[pos] = '(';
+                generateAll(current, pos + 1, lstResult);
+                current[pos] = ')';
+                generateAll(current, pos + 1, lstResult);
+            }
+        }
+
+        public bool valid(char[] current)
+        {
+            int balance = 0;
+            foreach (char c in current)
+            {
+                if (c == '(') balance++;
+                else balance--;
+                if (balance < 0) return false;
+            }
+            return (balance == 0);
+        }
+
+        internal int removeDuplicateElements(int[] arrayElements)
+        {
+            int result = 0;
+
+            if (arrayElements.Length < 1) return result;
+
+
+            int k = 0;
+
+            for (int i = 0; i < arrayElements.Length; i++)
+            {
+                while (i + 1 < arrayElements.Length && arrayElements[i] == arrayElements[i + 1])
+                {
+                    i++;
+                }
+
+                arrayElements[k] = arrayElements[i];
+                k++;
+            }
+
+            // Logic to remove elements from arry 
+            arrayElements = arrayElements.Where((source, index) => index <= k - 1).ToArray();
+
+            result = k;
+
+
+            return result;
+        }
+
+        internal int removeElement(int[] arrayElements, int val)
+        {
+            int result = 0, k = 0;
+
+            if (arrayElements.Length < 1) return result;
+
+            for (int i = 0; i < arrayElements.Length; i++)
+            {
+                if (arrayElements[i] != val)
+                {
+                    arrayElements[k] = arrayElements[i];
+                    k++;
+                }
+            }
+
+            result = k;
+            return result;
+        }
+
+        internal int findFirstOccurance(string haystack, string needle)
+        {
+            if (string.IsNullOrEmpty(haystack) || string.IsNullOrEmpty(needle)) return -1;
+
+            if (!haystack.Contains(needle)) return -1;
+
+            Console.WriteLine(haystack.IndexOf(needle, StringComparison.OrdinalIgnoreCase));
+
+            return haystack.IndexOf(needle, StringComparison.OrdinalIgnoreCase);
+        }
+
+        internal int DividetwoIntegers(int dividend, int divisor)
+        {
+
+            int result = 0;
+            if (dividend == 0 || divisor == 0) return result;
+
+            if (dividend == int.MinValue && divisor == -1)
+            {
+                return int.MaxValue;
+            }
+
+            //Count number of - sings 
+            // If it is 1 then we need append - to the result.
+            int negatvieSigns = 0;
+
+            if (dividend < 0)
+            {
+                negatvieSigns++;
+                dividend = -dividend;
+            }
+            if (divisor < 0)
+            {
+                negatvieSigns++;
+                divisor = -divisor;
+            }
+
+            int quotient = 0;
+
+            while (dividend - divisor >= 0)
+            {
+                quotient++;
+                dividend -= divisor;
+            }
+
+            if (negatvieSigns == 1)
+            {
+                quotient = -quotient;
+            }
+
+            return quotient;
+
+        }
+
+        internal IList<int> FindSubstring(string mainWord, string[] words)
+        {
+
+            List<int> result = new List<int>();
+            if (string.IsNullOrEmpty(mainWord) || words.Length <= 0) return result;
+
+            //Create a dictionary and add all the words and their repated times (int)
+            Dictionary<string, int> dicWords = new Dictionary<string, int>();
+
+            // Find length of main word (n)
+            int n = mainWord.Length;
+            // Find length of words.(k)
+            int k = words.Length;
+            //Fign length of word (all words are same length) (wordLength)
+            int wordLength = words[0].Length;
+            // k * wordLength is the final sub string.
+            int subStringSize = wordLength * k;
+
+
+            foreach (string word in words)
+            {
+                if (!dicWords.ContainsKey(word))
+                {
+                    dicWords.Add(word, 1);
+                }
+                else
+                {
+                    dicWords[word] += 1;
+                }
+            }
+
+
+            for (int i = 0; i < n - subStringSize + 1; i++)
+            {
+                if (check(i, mainWord, dicWords, k, wordLength, subStringSize))
+                {
+                    result.Add(i);
+                }
+            }
+
+
+
+            return result;
+
+        }
+
+        private bool check(int index, string s, Dictionary<string, int> dicWords, int k, int wordLength, int subStringSize)
+        {
+            // copy the original dictionary
+            Dictionary<string, int> dicRemaining = new Dictionary<string, int>(dicWords);
+            int wordsUsed = 0;
+            for (int j = index; j < index + subStringSize; j += wordLength)
+            {
+                string sub = s.Substring(j, wordLength);
+
+                if (dicRemaining.ContainsKey(sub) && dicRemaining[sub] > 0)
+                {
+                    dicRemaining[sub] -= 1;
+                    wordsUsed++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return wordsUsed == k;
+        }
+
+        internal int LongestValidParentheses(string symbol)
+        {
+            int result = 0;
+            Stack<int> stack = new Stack<int>();
+
+            stack.Push(-1);
+
+            for (int i = 0; i < symbol.Length; i++)
+            {
+                if (symbol[i].ToString() == "(")
+                {
+                    stack.Push(i);
+                }
+                else
+                {
+                    stack.Pop();
+                    if (stack.Count == 0)
+                    {
+                        stack.Push(i);
+                    }
+                    result = Math.Max(result, i - stack.Peek());
+                }
+
+            }
+
+            return result;
+        }
+
+        internal int SearchinRotatedSortedArray(int[] arrayItems, int target)
+        {
+            int result = -1;
+
+            if (arrayItems.Length == 0 || (arrayItems.Length == 1 && arrayItems[0] != target)) return result;
+
+            int start = 0, end = arrayItems.Length - 1, mid = 0;
+
+            while (start <= end)
+            {
+                mid = (start + (end - start) / 2);
+
+                if (arrayItems[mid] == target) return mid;
+
+                if (arrayItems[mid] >= arrayItems[start])
+                {
+                    if (target >= arrayItems[start] && target < arrayItems[mid])
+                    {
+                        end = mid - 1;
+                    }
+                    else
+                    {
+                        start = mid + 1;
+                    }
+                }
+                else
+                {
+                    if (target <= arrayItems[end] && target > arrayItems[mid])
+                    {
+                        start = mid + 1;
+                    }
+                    else end = mid - 1;
+                }
+            }
+
+            return result;
+        }
+
+        internal int[] findFirstandLastOuccranceinArray(int[] nums, int target)
+        {
+            int[] result = { -1, -1 };
+
+            int firstOccurance = findOccurance(nums, target, true);
+
+            if (firstOccurance == -1) return result;
+
+            int secondOcurance = findOccurance(nums, target, false);
+
+            result = new int[] { firstOccurance, secondOcurance };
+
+            return result;
+
+        }
+
+        private int findOccurance(int[] nums, int target, bool isFirstOccurance)
+        {
+            int start = 0, end = nums.Length - 1, mid = 0;
+
+            while (start <= end)
+            {
+                mid = start + (end - start) / 2;
+
+                if (nums[mid] == target)
+                {
+                    if (isFirstOccurance)
+                    {
+                        if (mid == start || nums[mid - 1] != target)
+                        {
+                            return mid;
+                        }
+
+                        else
+                        {
+                            end = mid - 1;
+                        }
+                    }
+                    else
+                    {
+                        if (mid == end || nums[mid + 1] != target)
+                        {
+                            return mid;
+                        }
+
+                        else
+                        {
+                            start = mid + 1;
+                        }
+
+                    }
+                }
+                else if (nums[mid] >= target)
+                {
+                    end = mid - 1;
+                }
+                else
+                {
+                    start = mid + 1;
+                }
+            }
+
+            return -1;
+        }
+
+        internal bool IsValidSudoku(string[,] board)
+        {
+            int boardSize = board.GetUpperBound(1) + 1; // Marix is zero indexed.
+
+            //use Hashset to recrod the status.
+
+            HashSet<string>[] rows = new HashSet<string>[boardSize];
+            HashSet<string>[] cols = new HashSet<string>[boardSize];
+            HashSet<string>[] boxes = new HashSet<string>[boardSize];
+
+            for (int i = 0; i < boardSize; i++)
+            {
+                rows[i] = new HashSet<string>();
+                cols[i] = new HashSet<string>();
+                boxes[i] = new HashSet<string>();
+            }
+
+            for (int row = 0; row < boardSize; row++)
+            {
+                for (int col = 0; col < boardSize; col++)
+                {
+                    string value = board[row, col];
+
+                    if (value == ".")
+                    {
+                        continue;
+                    }
+
+                    if (rows[row].Contains(value))
+                    {
+                        return false;
+                    }
+                    rows[row].Add(value);
+
+                    if (cols[col].Contains(value))
+                    {
+                        return false;
+                    }
+                    cols[col].Add(value);
+
+                    //Check the box.
+                    int idx = (row / 3) * 3 + col / 3;
+
+                    if (boxes[idx].Contains(value))
+                    {
+                        return false;
+                    }
+                    boxes[idx].Add(value);
+                }
+            }
+
+            return true;
+
+        }
+
+        internal IList<IList<int>> combinationSum(int[] candidates, int target)
+        {
+            IList<IList<int>> result = new List<IList<int>>();
+            if (candidates.Length == 0) return result;
+
+            int[] copyArr = candidates;
+
+            for (int i = 0; i < candidates.Length; i++)
+            {
+                List<int> list = new List<int>();
+
+                if (candidates[i] > target)
+                    continue;
+
+                if (candidates[i] == target)
+                {
+                    result.Add(new List<int> { candidates[i] });
+                    continue;
+                }
+
+                int numRepeat = target / candidates[i];
+
+                for (int j = numRepeat; j > 0; j--)
+                {
+                    int currentNum = candidates[i] * j;
+                    int balence = target - currentNum;
+
+                    if (balence == 0 || candidates.Contains(balence))
+                    {                       
+
+                        for (int k = j; k > 0; k--)
+                        {
+                            list.Add(candidates[i]);
+                        }
+                        if(balence == 0)
+                        {
+                            j--;
+                        }
+                        if (balence != 0)
+                        {                            
+                            list.Add(balence);
+                        }
+
+                        result.Add(list);
+                    }
+
+                    list = new List<int>();
+                }
+                copyArr = copyArr.Skip(1).ToArray();
+            }
+
+            return result;
         }
     }
 }
