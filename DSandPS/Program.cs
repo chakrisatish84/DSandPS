@@ -1,10 +1,17 @@
 ﻿using DSandPS.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Remoting.Lifetime;
+using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace DSandPS
 {
@@ -19,10 +26,10 @@ namespace DSandPS
             //int[] arr = { 1,2,2,3,4,5,5,5,6,6,7,8,9,9 };
 
             //Single Linked List
-            SingleLinkedList list = new SingleLinkedList();
+            //SingleLinkedList list = new SingleLinkedList();
 
-            //Create a list
-            list.create(arr);
+            ////Create a list
+            //list.create(arr);
 
             // Print the list items, Iterative way.
             //Console.WriteLine("Print all list elements");
@@ -250,9 +257,9 @@ namespace DSandPS
             //string sText = "PAYPALISHIRING";
             //array.ZigzagConvert(sText, 4);
 
-            // Reverse Integer
+            //// Reverse Integer
             //int number = 123;
-            //array.ReverseInteger(number);
+            //array.Reverse(number);
 
             //Convert String to Integer (MyAtoi)
             //string sText = " -41-93";
@@ -268,7 +275,7 @@ namespace DSandPS
 
             //Longest Common Prefix.
             //Write a function to find the longest common prefix string amongst an array of strings.
-            //string[] strs = { "flower", "flow", "flight" };
+            //string[] strs = { "flower", "flow", "flight", "fight" };
             //array.LongestCommonPrefix(strs);
 
             // Container with Most Water.
@@ -332,7 +339,7 @@ namespace DSandPS
 
 
             // Valid Sudoku
-            //string[,] board = new string[9, 9] { { "5", "3", ".", ".", "7", ".", ".", ".", "." },{"6", ".", ".", "1", "9", "5", ".", ".", "." }
+            //string[,] board = new string[9, 9] { { "5", "3", ".", "5", "7", ".", ".", ".", "." },{"6", ".", ".", "1", "9", "5", ".", ".", "." }
             //                                    ,{".", "9", "8", ".", ".", ".", ".", "6", "." } ,{"8", ".", ".", ".", "6", ".", ".", ".", "3" }
             //                                    ,{"4", ".", ".", "8", ".", "3", ".", ".", "1" } ,{"7", ".", ".", ".", "2", ".", ".", ".", "6" }
             //                                    ,{".", "6", ".", ".", ".", ".", "2", "8", "." } ,{".", ".", ".", "4", "1", "9", ".", ".", "5" }
@@ -344,8 +351,130 @@ namespace DSandPS
             // Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
 
             // The same number may be chosen from candidates an unlimited number of times.Two combinations are unique if the frequency of at least one of the chosen numbers is different.
-            int[] candidates = { 2,3,5}; int target = 8; //2, 3, 6, 7  (7)
-            array.combinationSum(candidates, target);
+            //int[] candidates = { 2,3,5}; int target = 8; //2, 3, 6, 7  (7)
+            //array.combinationSum(candidates, target);
+
+            //Sort the people.
+            // You are given an array of strings names, and an array heights that consists of distinct positive integers.Both arrays are of length n.
+            //For each index i, names[i] and heights[i] denote the name and height of the ith person.
+            //Return names sorted in descending order by the people's heights.
+
+            //string[] names = { "Mary", "John", "Emma" }; int[] heights = { 180, 165, 170 };
+
+            //string[] result = array.sortPeople(names, heights);
+
+            // Given an unsorted integer array nums, return the smallest missing positive integer.
+            // You must implement an algorithm that runs in O(n) time and uses constant extra space.
+
+            //int[] numbers = { 3, 4, -1, 1 }; // { 1, 2, 0 }; //{ 3, 4, -1, -2, 1, 5, 16, 0, 2, 0 };
+            //int missingNumber = array.FirstMissingPositiveInteger(numbers);
+            //Console.WriteLine("Missing first postive number {0}", missingNumber);
+
+            //Wildcard Matching
+            //            Given an input string(s) and a pattern(p), implement wildcard pattern matching with support for '?' and '*' where:
+
+            //'?' Matches any single character.
+            //'*' Matches any sequence of characters(including the empty sequence).
+            ////The matching should cover the entire input string (not partial).
+            //string s = "adceb";//"abcabczzzde";//"aa"; //"adceb",
+            //string p = "*a*b";//"*abc???de*";//  "a*"; //"*a*b";
+            //bool isMatch = array.isMatch(s, p);
+
+            // Given an integer array nums, find the contiguous subarray(containing at least one number) which has the largest sum and return its sum.
+            //A subarray is a contiguous part of an array. (Kadanes alogoritham)
+            //int[] nums = { 5, 4, -1, 7, 8 };//{ -2, 1, -3, 4, -1, 2, 1, -5, 4 };
+            //int maxSubSum = array.MaxSubArray(nums);
+
+            //Best Time to Buy and Sell Stock
+            //You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+            //You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future to sell that stock.
+
+            //Return the maximum profit you can achieve from this transaction.If you cannot achieve any profit, return 0.
+            //int[] prices = { 7, 1, 5, 3, 6, 4 };
+            //int maxProfit = array.MaxProfit(prices);
+
+            //Single LL
+            //SingleLL list = new SingleLL();
+
+            //int[] arr1 = { 1, 2, 4 };
+            //int[] arr2 = {1,3,4 };
+
+            //int[] arr1 = { 1, 2, 3, 4, 5, 6 };
+            //SingleLLNode list1 = list.CreateList(arr1);
+
+            //list.SwapNodeInPairs(list1);
+
+            //list.ReverseNodesInKGroup(list1, 2);
+
+            //SingleLLNode list1 = list.CreateList(arr1);
+            //SingleLLNode list2 = list.CreateList(arr2);
+
+            //SingleLLNode mergedList = list.Merge(list1, list2);
+
+            //int[] listItems = { 3, 4, 5, 6, 7, 8, 5, 4, 9 };
+            //list.CreateList(listItems);
+
+            //list.TraverseAndPrintLL();
+            //list.InserAtStart();
+            //list.InsertAtEnd();
+
+            //list.InsertAtSpecificPosition(10);
+            //list.InsertAtMiddle();
+
+            //list.ReverstLL();
+            //Console.WriteLine("Reversed List");
+            //list.TraverseAndPrintLL();
+
+            //list.TraverseAndPrintLLInReverse();
+
+            //Double LL
+            //DoubleLL list = new DoubleLL();
+            //list.Create(listItems);
+            //list.traverseDoubleLLFromStart();
+            ////list.InsertAtStart();
+            ////list.InsertAtEnd();
+            //list.reverseLL();
+            //list.traverseDoubleLLFromStart();
+
+            //BST
+            //int[] listItems = { 6, 7, 5, 8, 9, 3, 4 };
+            //int[] listItems1 = { 6, 5, 3, 4, 15, 14, 12, 13, 20, 18, 21, 17, 19, 22 };
+            //BinarySearchTree bst = new BinarySearchTree();
+            //DoubleLLNode root1 = bst.CreateBST(listItems);
+            //DoubleLLNode root2 = bst.CreateBST(listItems1);
+
+            //bst.BSTTraversal();
+
+            //bst.FindInorderPredecessor(9);
+            //bst.numberBSTTrees(5);
+
+            //bst.DeleteNodeFromBST(20);
+
+            //int bstHeight = bst.heightOfBST(root);
+            //Console.WriteLine("BST height is : " + bstHeight); 
+
+            //int bstDiameter = bst.DiameterofaBST(root);
+            //Console.WriteLine("BST Diameter is : " + bstDiameter); 
+
+            //bool isIsomarphic = bst.isIso(root1, root2);
+            //Console.WriteLine("BST trees are : " + (isIsomarphic ? "IsomarPhic" :"NotIsomarphic"));
+
+            //bst.printNodesHavingKNodes(root2, 2);
+
+
+            // Matrix Collection.
+            MatrixCollection matrix = new MatrixCollection();
+
+            //int[,] matrixInput = new int[3, 4] {
+            //    { 1, 2, 3, 4 }, { 5,6,7,8 }, { 9,10,11,12 }
+            //};
+            //matrix.printSpiralmatrix(matrixInput);
+
+            int[,] intervals = new int[,] { { 1, 3 },{ 6, 9 }};
+            int[] newInterval = { 2, 5 };
+            //matrix.mergeIntervals(intervals);
+            matrix.insertInterval(intervals, newInterval);
         }
     }
 }

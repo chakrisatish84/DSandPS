@@ -288,5 +288,51 @@ namespace DSandPS.Models
 
             return count;
         }
+
+        public SingleLLNode SwapNodeInPairs(SingleLLNode list)
+        {
+            if(list == null || list.next == null)
+            {
+                return list;
+            } 
+            SingleLLNode p = list;
+            SingleLLNode q = null, new_head = null, ptr = null;
+
+            if (p.next != null)
+            {
+                q = p.next;
+                new_head = q;
+
+                ptr = q.next;
+
+                q.next = p;
+                if (ptr.next == null) return new_head;
+                p.next = ptr.next;
+
+                p = ptr;
+            }
+
+            while(p.next != null)
+            {
+                q = p.next;
+
+                ptr = q.next;
+
+                q.next = p;
+
+                if (ptr != null && ptr.next == null)
+                {
+                    p.next = ptr;
+                    return new_head;
+                }
+                if (ptr == null || ptr.next == null) return new_head;
+
+                p.next = ptr.next;
+
+                p = ptr;
+            }
+
+            return new_head;
+        }
     }
 }

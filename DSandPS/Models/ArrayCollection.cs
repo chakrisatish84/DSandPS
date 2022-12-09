@@ -622,19 +622,19 @@ namespace DSandPS.Models
             return testMoves.Length == boardSize * boardSize ? "Draw" : "Pending";
         }
 
-        internal void LengthOfLongestSubString(string sText)
+        internal int LengthOfLongestSubString(string sText)
         {
             if (string.IsNullOrEmpty(sText.Trim()))
             {
                 if (sText == "")
                 {
                     Console.WriteLine("Count: 0");
-                    return;
+                    return 0;
                 }
                 else
                 {
                     Console.WriteLine("Count: 1");
-                    return;
+                    return 1;
                 }
             }
             //char[] charText = sText.ToCharArray();
@@ -662,56 +662,56 @@ namespace DSandPS.Models
             //Console.WriteLine(sText.ToCharArray(startCharIndex, endCharIndex));
 
             //Logic using sliding window.
-            //Two pointer logic. (It will work if we want to know only the count, if we want to see the result then it might not work)
-            int a_pointer = 0;
-            int b_pointer = 0;
-            int max = 0;
-            int maxSoFar = 0;
+            ////Two pointer logic. (It will work if we want to know only the count, if we want to see the result then it might not work)
+            //int a_pointer = 0;
+            //int b_pointer = 0;
+            //int max = 0;
+            //int maxSoFar = 0;
 
-            //Place unique items in Hash table
-            HashSet<string> resultSet = new HashSet<string>();
+            ////Place unique items in Hash table
+            //HashSet<string> resultSet = new HashSet<string>();
 
-            HashSet<char> charSet = new HashSet<char>();
-            while (b_pointer < sText.Length)
-            {
-                if (!charSet.Contains(sText[b_pointer]))
-                {
-                    charSet.Add(sText[b_pointer]);
-                    b_pointer++;
-                    max = Math.Max(max, charSet.Count);
-                }
-                else
-                {
-                    if (max > maxSoFar)
-                    {
-                        resultSet.Clear();
-                    }
-                    if (max <= charSet.Count)
-                    {
-                        maxSoFar = max;
-                        if (!resultSet.Contains(sText.Substring(a_pointer, b_pointer - a_pointer)))
-                        {
-                            resultSet.Add(sText.Substring(a_pointer, b_pointer - a_pointer));
-                        }
+            //HashSet<char> charSet = new HashSet<char>();
+            //while (b_pointer < sText.Length)
+            //{
+            //    if (!charSet.Contains(sText[b_pointer]))
+            //    {
+            //        charSet.Add(sText[b_pointer]);
+            //        b_pointer++;
+            //        max = Math.Max(max, charSet.Count);
+            //    }
+            //    else
+            //    {
+            //        if (max > maxSoFar)
+            //        {
+            //            resultSet.Clear();
+            //        }
+            //        if (max <= charSet.Count)
+            //        {
+            //            maxSoFar = max;
+            //            if (!resultSet.Contains(sText.Substring(a_pointer, b_pointer - a_pointer)))
+            //            {
+            //                resultSet.Add(sText.Substring(a_pointer, b_pointer - a_pointer));
+            //            }
 
-                    }
-                    charSet.Remove(sText[a_pointer]);
-                    a_pointer++;
-                }
-            }
+            //        }
+            //        charSet.Remove(sText[a_pointer]);
+            //        a_pointer++;
+            //    }
+            //}
 
-            if (max > maxSoFar)
-            {
-                resultSet.Clear();
-            }
-            if (max >= maxSoFar && max <= charSet.Count)
-            {
-                if (!resultSet.Contains(sText.Substring(a_pointer, b_pointer - a_pointer)))
-                {
-                    resultSet.Add(sText.Substring(a_pointer, b_pointer - a_pointer));
-                }
-            }
-            Console.WriteLine(String.Join(", ", resultSet) + " Count is " + max);
+            //if (max > maxSoFar)
+            //{
+            //    resultSet.Clear();
+            //}
+            //if (max >= maxSoFar && max <= charSet.Count)
+            //{
+            //    if (!resultSet.Contains(sText.Substring(a_pointer, b_pointer - a_pointer)))
+            //    {
+            //        resultSet.Add(sText.Substring(a_pointer, b_pointer - a_pointer));
+            //    }
+            //}
+            //Console.WriteLine(String.Join(", ", resultSet) + " Count is " + max);
 
             ///Logic to get Count and  substring. (This is having so many issues with different strings)
             // 1) If string is empty (or) emptry space (return 0 (or) 1)
@@ -749,6 +749,66 @@ namespace DSandPS.Models
             //    result = new string(charSet.ToArray());
             //}
             //Console.WriteLine(result + " and the count is " + resultCount);          
+
+
+            int result = 0;
+            int strLength = sText.Length;
+            int maxSofar = 0;
+            StringBuilder sb = new StringBuilder();
+
+            //if (strLength == 0)
+            //{
+            //    return result;
+            //}
+
+            //if (strLength == 1)
+            //{
+            //    return 1;
+            //}
+
+            Queue<string> queue = new Queue<string>();
+
+            queue.Enqueue(sText[0].ToString());
+
+            for (int i = 1; i < strLength; i++)
+            {
+                if (queue.Contains(sText[i].ToString()))
+                {
+                    if (queue.Count > maxSofar)
+                    {
+                        sb.Clear();
+                        for (int k = 0; k < queue.Count; k++)
+                        {
+                            sb.Append(queue.Peek());
+                        }
+                        maxSofar = queue.Count;
+                    }
+                    while (sText[i].ToString() != queue.Peek())
+                    {
+                        queue.Dequeue();
+                    }
+                    queue.Dequeue();
+                    queue.Enqueue(sText[i].ToString());
+                }
+                else
+                {
+                    queue.Enqueue(sText[i].ToString());
+                }
+            }
+
+            if (queue.Count > maxSofar)
+            {
+                sb.Clear();
+                for (int k = 0; k < queue.Count; k++)
+                {
+                    sb.Append(queue.Peek());
+                }
+                maxSofar = queue.Count;
+            }
+
+            result = sb.Length;
+
+            return result;
 
 
         }
@@ -1029,32 +1089,62 @@ namespace DSandPS.Models
             return result;
         }
 
-        internal int ReverseInteger(int num)
+        public int Reverse(int x)
         {
-            int pop = 0, rev = 0;
+            int result = 0;
+            return ReverseInteger(x, result);
+        }
 
-            if (num == 0 && num.ToString().Length == 1)
+        internal int ReverseInteger(int num, int result)
+        {
+            int rem = 0;
+
+            if (num == 0)
             {
-                return num;
+                return result;
             }
 
-            while (num != 0)
+            rem = num % 10;
+            num = num / 10;
+
+            if ((result > int.MaxValue / 10 || (result == int.MaxValue / 10 && rem > 7)) || (result < int.MinValue / 10 || (result == int.MinValue / 10 && rem < -8)))
             {
+                num = 0;
+                result = 0;
 
-                pop = num % 10;
-                num = num / 10;
-
-                // Make sure it is not overflow the number
-                //Check that before adding multiplication
-
-                Console.WriteLine(string.Format("Divide {0}, Module {1}", int.MaxValue / 10, int.MaxValue % 10));
-
-                if (rev > int.MaxValue / 10 || rev == int.MaxValue / 10 && pop > 7) return 0;
-                if (rev < int.MinValue / 10 || rev == int.MaxValue / 10 && pop < -8) return 0;
-
-                rev = rev * 10 + pop;
             }
-            return rev;
+            else
+            {
+                result = result * 10 + rem;
+            }
+
+            int finalResult = ReverseInteger(num, result);
+
+            return finalResult;
+            //    int pop = 0, rev = 0;
+
+            //    if (num == 0 && num.ToString().Length == 1)
+            //    {
+            //        return num;
+            //    }
+
+            //    while (num != 0)
+            //    {
+
+            //        pop = num % 10;
+            //        num = num / 10;
+
+            //        // Make sure it is not overflow the number
+            //        //Check that before adding multiplication
+
+            //        Console.WriteLine(string.Format("Divide {0}, Module {1}", int.MaxValue / 10, int.MaxValue % 10));
+
+            //        if (rev > int.MaxValue / 10 || rev == int.MaxValue / 10 && pop > 7) return 0;
+            //        if (rev < int.MinValue / 10 || rev == int.MaxValue / 10 && pop < -8) return 0;
+
+            //        rev = rev * 10 + pop;
+            //    }
+            //    return rev;
         }
 
 
@@ -1826,18 +1916,18 @@ namespace DSandPS.Models
                     int balence = target - currentNum;
 
                     if (balence == 0 || candidates.Contains(balence))
-                    {                       
+                    {
 
                         for (int k = j; k > 0; k--)
                         {
                             list.Add(candidates[i]);
                         }
-                        if(balence == 0)
+                        if (balence == 0)
                         {
                             j--;
                         }
                         if (balence != 0)
-                        {                            
+                        {
                             list.Add(balence);
                         }
 
@@ -1850,6 +1940,251 @@ namespace DSandPS.Models
             }
 
             return result;
+        }
+
+        internal string[] sortPeople(string[] names, int[] heights)
+        {
+            string[] result = new string[names.Length];
+            if (names.Length == 0 || heights.Length == 0 || names.Length != heights.Length)
+            {
+                return result;
+            }
+            int itemsLength = names.Length;
+
+            Dictionary<int, string> dicItems = new Dictionary<int, string>();
+
+            int i = 0;
+            while (i < itemsLength)
+            {
+                dicItems.Add(heights[i], names[i]);
+                i++;
+            }
+
+            //sort the heights;
+            Array.Sort(heights, new Comparison<int>((i1, i2) => i2.CompareTo(i1)));
+
+            for (int j = 0; j < heights.Length; j++)
+            {
+                result[j] = dicItems[heights[j]];
+            }
+
+
+            return result;
+        }
+
+        internal int FirstMissingPositiveInteger(int[] numbers)
+        {
+            int missingNumber = 1;
+            int totalNumbers = numbers.Length;
+            if (totalNumbers == 0)
+            {
+                return missingNumber;
+            }
+
+            int contains = 0;
+
+            //Check the array in haivng the element 1.
+            for (int i = 0; i < totalNumbers; i++)
+            {
+                if (numbers[i] == 1)
+                {
+                    contains++;
+                    break;
+                }
+            }
+
+            if (contains == 0) // 1 is not found, so that is the first missing positive and return that number
+            {
+                return missingNumber;
+            }
+
+            // Replace all negative numbers and numbers which are greater than the totalNumbers with 1
+
+            for (int i = 0; i < totalNumbers; i++)
+            {
+                if (numbers[i] > totalNumbers || numbers[i] <= 0)
+                {
+                    numbers[i] = 1;
+                }
+            }
+
+            // Take the i value and updated the corresponding array index value as -ve number
+            // That way we can loop through and return the first not negative number Index as missing first positive number
+
+            for (int i = 0; i < totalNumbers; i++)
+            {
+                int a = Math.Abs(numbers[i]);
+
+                if (a == totalNumbers) // If the values is max array lenth, we need to update the 0 index value, as it is zero based
+                    numbers[0] = -Math.Abs(numbers[0]);
+                else
+                    numbers[a] = -Math.Abs(numbers[a]);
+            }
+
+            //Now find the index of not negative number and that is the first missing positive number
+            for (int i = 1; i < totalNumbers; i++)
+            {
+                if (numbers[i] > 0)
+                {
+                    return i;
+                }
+            }
+
+            if (numbers[0] > 0)
+            {
+                return totalNumbers;
+            }
+
+            return totalNumbers + 1;
+        }
+
+        internal bool isMatch(string s, string p)
+        {
+            bool isMatching = false;
+            if (string.IsNullOrEmpty(s) || string.IsNullOrEmpty(p))
+            {
+                return isMatching;
+            }
+
+            if (p == "*")
+            {
+                isMatching = true;
+                return isMatching;
+            }
+
+            //if (s.Length != p.Length)
+            //{
+            //    return isMatching;
+            //}
+
+            int j = 0;
+
+            for (int i = 0; i < s.Length; i++, j++)
+            {
+                if (p[j].ToString() == "*")
+                {
+                    if (p.Length - 1 == j)
+                    {
+                        return true;
+                    }
+                    i++; j++;
+                    if (s[i] == p[j])
+                    {
+                        continue;
+                    }
+                    while (s.Length > i && s[i] != p[j])
+                    {
+                        i++;
+                    }
+                }
+                if (p[j].ToString() == "?")
+                {
+                    continue;
+                }
+
+                if (s[i] != p[j])
+                {
+                    return false;
+                }
+            }
+
+            if (j != p.Length - 1)
+            {
+                return false;
+            }
+
+            isMatching = true;
+
+            return isMatching;
+        }
+
+        internal int MaxSubArray(int[] nums)
+        {
+            if (nums.Length == 0)
+            {
+                return 0;
+            }
+            if (nums.Length == 1)
+            {
+                return nums[0];
+            }
+            int maxSoFar = 0;
+            int currentSum = 0;
+            int arrLength = nums.Length;
+            int i = 0;
+
+            while (i < arrLength)
+            {
+                currentSum = currentSum + nums[i];
+                if (maxSoFar < currentSum)
+                {
+                    maxSoFar = currentSum;
+                }
+
+                if (currentSum < 0)
+                {
+                    currentSum = 0;
+                }
+                i++;
+            }
+
+            // If array contains only negative numbers return the last element.
+            if (maxSoFar == 0)
+            {
+                maxSoFar = nums[arrLength];
+            }
+
+            return maxSoFar;
+        }
+
+        internal int MaxProfit(int[] prices)
+        {
+            int maxProfit = 0;
+            //This is giving time out error
+            //
+            //int currentProfit = 0;
+
+            //for (int i = 0; i < prices.Length - 1; i++)
+            //{
+            //    int j = i + 1;
+            //    while (j < prices.Length)
+            //    {
+            //        if (prices[i] > prices[j])
+            //        {
+            //            j++;
+            //        }
+            //        else if (j < prices.Length)
+            //        {
+            //            currentProfit = prices[j] - prices[i];
+
+            //            if (maxProfit < currentProfit)
+            //            {
+            //                maxProfit = currentProfit;
+            //            }
+            //            j++;
+            //        }
+            //    }
+
+            //}
+            int minPrice = int.MaxValue;
+
+            for (int i = 0; i < prices.Length; i++)
+            {
+                if (prices[i] < minPrice)
+                {
+                    minPrice = prices[i];
+                }
+
+                else
+                {
+                    if (prices[i] - minPrice > maxProfit)
+                    {
+                        maxProfit = prices[i] - minPrice;
+                    }
+                }
+            }
+
+            return maxProfit;
         }
     }
 }

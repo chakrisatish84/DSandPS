@@ -24,7 +24,7 @@ namespace DSandPS.Models
 
         public void Print()
         {
-            Console.WriteLine("\t" + this.data);
+            Console.Write("\t" + this.data + "-> ");
         }
     }
 }

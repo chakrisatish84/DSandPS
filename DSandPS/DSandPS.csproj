@@ -49,10 +49,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\ArrayCollection.cs" />
+    <Compile Include="Models\BinarySearchTree.cs" />
+    <Compile Include="Models\DoubleLL.cs" />
+    <Compile Include="Models\DoubleLLNode.cs" />
     <Compile Include="Models\LinkedList.cs" />
     <Compile Include="Models\ListNode.cs" />
+    <Compile Include="Models\MatrixCollection.cs" />
     <Compile Include="Models\SingleLinkedList.cs" />
     <Compile Include="Models\SingleListNode.cs" />
+    <Compile Include="Models\SingleLL.cs" />
+    <Compile Include="Models\SingleLLNode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
