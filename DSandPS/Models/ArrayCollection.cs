@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
@@ -2185,6 +2186,61 @@ namespace DSandPS.Models
             }
 
             return maxProfit;
+        }
+
+        internal int LengthOfLastWord(string str)
+        {
+            int result = 0;
+            // if string is empty return 0;
+            if (string.IsNullOrEmpty(str)) return result;
+
+            string[] splitString = str.Split(' ');
+
+            for (int i = splitString.Length - 1; i >= 0; i--)
+            {
+                if (!string.IsNullOrEmpty(splitString[i]))
+                {
+                    return splitString[i].Length;
+                }
+            }
+
+            return result;
+        }
+
+        internal void swapNumbers(int[] swaparr)
+        {
+            if (swaparr.Length == 0) return;
+
+            int low = 0, mid = 0, high = swaparr.Length - 1;
+
+
+
+            while (mid <= high)
+            {
+                switch (swaparr[mid])
+                {
+                    case 0:
+                        swap(swaparr, low, mid);
+                        low++; mid++;
+                        break;
+
+                    case 1:
+                        mid++;
+                        break;
+                    case 2:
+                        swap(swaparr, high, mid);
+                        high--;
+                        break; 
+                }
+            }
+
+        }
+
+        private void swap(int[] swaparr, int left, int right)
+        {
+            int temp = swaparr[left];
+            swaparr[left] = swaparr[right];
+            swaparr[right] = temp;
         }
     }
 }

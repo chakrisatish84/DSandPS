@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting.Lifetime;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace DSandPS
 {
@@ -394,10 +396,19 @@ namespace DSandPS
             //int[] prices = { 7, 1, 5, 3, 6, 4 };
             //int maxProfit = array.MaxProfit(prices);
 
-            //Single LL
-            //SingleLL list = new SingleLL();
+            // Length of Last word.
+            //string s = "   fly me   to   the moon  ";
+            //array.LengthOfLastWord(s);
 
-            //int[] arr1 = { 1, 2, 4 };
+            //Swap 0,1,2
+            int[] swaparr = { 1, 0, 1, 2, 1, 0, 1, 2, 1, 0, 2, 1 };
+            array.swapNumbers(swaparr);
+
+            #region Linked List
+            //Single LL
+            SingleLL list = new SingleLL();
+
+            int[] arr1 = { 0, 1, 2 };
             //int[] arr2 = {1,3,4 };
 
             //int[] arr1 = { 1, 2, 3, 4, 5, 6 };
@@ -409,6 +420,9 @@ namespace DSandPS
 
             //SingleLLNode list1 = list.CreateList(arr1);
             //SingleLLNode list2 = list.CreateList(arr2);
+
+            //Given the head of a linked list, rotate the list to the right by k places.
+            //list.RotateRight(list1, 4);
 
             //SingleLLNode mergedList = list.Merge(list1, list2);
 
@@ -461,8 +475,10 @@ namespace DSandPS
             //Console.WriteLine("BST trees are : " + (isIsomarphic ? "IsomarPhic" :"NotIsomarphic"));
 
             //bst.printNodesHavingKNodes(root2, 2);
+            #endregion
 
 
+            #region Matrix
             // Matrix Collection.
             MatrixCollection matrix = new MatrixCollection();
 
@@ -471,10 +487,36 @@ namespace DSandPS
             //};
             //matrix.printSpiralmatrix(matrixInput);
 
-            int[,] intervals = new int[,] { { 1, 3 },{ 6, 9 }};
-            int[] newInterval = { 2, 5 };
-            //matrix.mergeIntervals(intervals);
-            matrix.insertInterval(intervals, newInterval);
+            //int[,] intervals = new int[,] { { 1, 3 },{ 6, 9 }};
+            //int[] newInterval = { 2, 5 };
+            ////matrix.mergeIntervals(intervals);
+            //matrix.insertInterval(intervals, newInterval);
+
+            //Spiral Matrix II 
+            // Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
+            int n = 1;
+            //matrix.GenerateMatrix(n);
+            #endregion
+            // Unique Paths.
+            // There is a robot on an m x n grid. The robot is initially located at the top - left corner(i.e., grid[0][0]).The robot tries to move to the bottom - right corner(i.e., grid[m - 1][n - 1]).The robot can only move either down or right at any point in time.
+            //Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+
+            //Recursive approch (top down, Max row, max column to bottom)
+            //matrix.UniquePaths(3, 2);
+
+            //You are given an m x n integer array grid. There is a robot initially located at the top - left corner(i.e., grid[0][0]).The robot tries to move to the bottom - right corner(i.e., grid[m - 1][n - 1]).The robot can only move either down or right at any point in time.
+
+            //An obstacle and space are marked as 1 or 0 respectively in grid.A path that the robot takes cannot include any square that is an obstacle.
+
+            //Return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+            //int[,] matrixInput = new int[,] { { 0, 0, 0 }, { 0, 1, 0, }, { 0, 0, 0 } };
+            //matrix.UniquePathwithObstacles(matrixInput);
+
+            //Given a m x n grid filled with non - negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
+            //Note: You can only move either down or right at any point in time.
+            //int[,] matrixInput = new int[,] { { 1, 2, 3 }, { 4, 5, 6 } };
+            //matrix.MinPathSum(matrixInput);
+
         }
     }
 }

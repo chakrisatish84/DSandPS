@@ -353,7 +353,7 @@ namespace DSandPS.Models
 
         internal SingleLLNode ReverseNodesInKGroup(SingleLLNode list, int k)
         {
-            if (list == null || k<1)
+            if (list == null || k < 1)
                 return list;
             SingleLLNode p = list, q = list, new_head = null, ptr = null, temp;
 
@@ -440,6 +440,75 @@ namespace DSandPS.Models
             temp = prev;
 
             return temp;
+        }
+
+        internal SingleLLNode RotateRight(SingleLLNode head, int k)
+        {
+            // Check if list is empty (or) having only one element.
+            if (head == null || head.next == null || k <= 0)
+            {
+                return head;
+            }
+
+            SingleLLNode p = head;
+            SingleLLNode q = null;
+
+            // If K element is greater than length of the list then we need loop only k % length times (as it repats the same)
+            // Get length of the list
+            int length = LinkedListLength(head);
+
+            k = k > length ? k % length : k;
+            // Loop through K times and rotate the list.
+            while (k > 0)
+            {
+                k--;
+                while (p.next != null)
+                {
+                    q = p;
+                    p = p.next;
+                }
+                q.next = null; // Removing Last element.
+                               //Insert the removed node (p) at the begining
+               head = insertAtBegining(head, p);
+
+            }
+
+            return head;
+        }
+
+        private int LinkedListLength(SingleLLNode head)
+        {
+            SingleLLNode temp = head;
+            int result = 0;
+
+            while (temp != null)
+            {
+                result++;
+
+                temp = temp.next;
+            }
+
+            return result;
+        }
+
+        public SingleLLNode insertAtBegining(SingleLLNode head, SingleLLNode val)
+        {
+            if (head == null)
+            {
+                head = val;
+                return head;
+            }
+
+            if (val == null)
+            {
+                return head;
+            }
+
+            val.next = head;
+            head = val;
+
+            return head;
+
         }
     }
 }
